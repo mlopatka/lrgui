@@ -18,6 +18,12 @@ if numel(varargin) == 1 %if called from inside LR_GUI
         switch workflow{i}
             case 'data' %none
                 transformed_data = checked_data;
+            case 'exp'  %exp
+                if(sum(sum(isinf(exp(transformed_data))))>0)
+                    message = 'exp leads to inf values';
+                else
+                    transformed_data = exp(transformed_data);
+                end
             case 'log' %log
                 if(~isempty(find(transformed_data<0,1)))
                     i = numel(workflow);

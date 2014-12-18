@@ -624,7 +624,7 @@ h.p16 = uicontrol('style','pushbutton','units','normalized','pos',...
 
 %% create popup menus
 %% popup menu for different transformations
-trans_names = ['-mean';'norm ';'log  ';'log10';'sqrt ';'/std '];
+trans_names = ['exp  ';'-mean';'norm ';'log  ';'log10';'sqrt ';'/std '];
 h.popup1 = uicontrol('style','popupmenu', 'string', trans_names, ...
     'units','normalized','pos',[x2+0.005,0.315,(x3-(x2+0.01))/2,0.425],'HandleVisibility','on');
 %% pop up for different distance metrics
