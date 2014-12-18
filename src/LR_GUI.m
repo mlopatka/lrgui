@@ -347,7 +347,7 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
             set(h.rb_feature_selection_method(:),'backgroundcolor','default','fontweight','n')
             % we limit the user in selecting the possible options
             %p5_call;
-            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.p18,h.cb_features,h.cb_labels,h.rb_samedistribution,h.rb_diffdistribution,h.cb_plots,h.popup1,h.popup2],'enable','off');
+            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.cb_features,h.cb_labels,h.rb_samedistribution,h.rb_diffdistribution,h.cb_plots,h.popup1,h.popup2],'enable','off');
             if(checked==1) %jacobs magical mystery tour
                 if(~isempty(str2num(get(h.t(10),'string')))&&strcmp(get(h.t(3),'string'),'distances computed'))
                     if(strcmp(get(h.p11,'string'),'Execute'))
@@ -464,7 +464,7 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
                 end
             end
             % Again, we allow the user to select all the possible options
-            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.p18,h.cb_features,h.cb_labels,h.cb_plots,h.popup1,h.popup2],'enable','on');
+            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.cb_features,h.cb_labels,h.cb_plots,h.popup1,h.popup2],'enable','on');
         end
     end
 
