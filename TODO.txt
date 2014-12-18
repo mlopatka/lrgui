@@ -1,24 +1,16 @@
-0.  fixing validation save results without xls write
-1.  documentation
-2.  manual setting of the bandwidth for KDE.
-3.  tooltips
-4.  exportPopParams, plot_distrib_and_hist, populate_Features, populate_Labels, post_params_to_gui all have global variables set in the beginning of the functions it is better to pass them in from LR_GUI
-5.  Remove clear figure button
-6.  ? colors for same and different source.
+1.  fixing validation save results without xls write
+2.  documentation
+3.  manual setting of the bandwidth for KDE.
+4.  tooltips
+5.  exportPopParams, plot_distrib_and_hist, populate_Features, populate_Labels, post_params_to_gui all have global variables set in the beginning of the functions it is better to pass them in from LR_GUI
+6.  Remove clear figure button
 7.  internal cross validation for feature selection
-8.  clicking on old performance statistics will restore old settings
-9.  waitbars for plots and feature selection methods
-
-
-10. smarter input of data
-11. new kde function (in c++)
-
-13. validation of LRs by didier meuwly method
-14. new transformations, (new metrics?)
-
-16. Allow setting up range Y axis
-17. Allow for transformation of data features to be applied to only some features
-18. cross validation in the background
-19. feature selection method, dropdown menu
-20. restructure buttongroups, reduce to two line
-21. ECE, ROC curve, Tippett plot  functionality attached to existing buttons.
+8.  waitbars for plots and feature selection methods
+9.  smarter input of data
+10. new kde function (in c++)
+11. validation of LRs by didier meuwly method
+12. Allow for transformation of data features to be applied to only some features
+13. cross validation in the background
+14. feature selection method, dropdown menu
+15. restructure buttongroups, reduce to two line
+16. ECE
