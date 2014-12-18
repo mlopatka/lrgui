@@ -83,7 +83,7 @@ while((changes_1==1||changes_0==1)&&runs<max_runs)
                         [~, parameters_same] = fit_distrib_to_data(distance_same,1000,distribution_same);
                         [~, parameters_diff] = fit_distrib_to_data(distance_diff,1000,distribution_diff);
                     end
-                    [confusion_matrix, cllr] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution,0);
+                    [confusion_matrix, cllr] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution,1);
 
                     pfp = confusion_matrix(2,1)/(confusion_matrix(2,1)+confusion_matrix(2,2));
                     pfn = confusion_matrix(1,2)/(confusion_matrix(1,1)+confusion_matrix(1,2));
@@ -143,7 +143,7 @@ while((changes_1==1||changes_0==1)&&runs<max_runs)
                         [~, parameters_same] = fit_distrib_to_data(distance_same,1000,distribution_same);
                         [~, parameters_diff] = fit_distrib_to_data(distance_diff,1000,distribution_diff);
                     end
-                    [confusion_matrix, ~] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, 0);
+                    [confusion_matrix, ~] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, 1);
 
                     pfp = confusion_matrix(2,1)/(confusion_matrix(2,1)+confusion_matrix(2,2));
                     pfn = confusion_matrix(1,2)/(confusion_matrix(1,1)+confusion_matrix(1,2));
