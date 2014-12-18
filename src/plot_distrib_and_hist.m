@@ -6,7 +6,7 @@ global distance_same parameters_same;
 global pdf_out_same pdf_out_diff;
 
 % what_to_display: must be a 1x4 binary vector
-handle_axis1    = h.ax1;
+handle_axis1 = h.ax1;
 what_to_display = logical(cell2mat(get(h.cb_plots, 'Value'))); %what are we plotting?
 
 [distance_same, distance_diff] = trim_data_for_kde(distance_same, distance_diff, h.rb_samedistribution, h.rb_diffdistribution);
@@ -14,7 +14,7 @@ what_to_display = logical(cell2mat(get(h.cb_plots, 'Value'))); %what are we plot
 
 n = 1000; % default bin size
 
-cla(handle_axis1);
+cla(gca);
 hold on;
 
 t = sum(what_to_display);
