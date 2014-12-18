@@ -34,10 +34,10 @@ h.cb_data_overview(3) = uicontrol('style','checkbox','string','heatmap' ,'units'
 
 % here, we can select what plots to make of the transformed data
 h.bg_summary_figures    = uibuttongroup('visible','on','Title','Summary figures','units','normalized','pos',[x3+0.02,0.08,(0.99-x3-0.02-0.01)/2,0.06]);
-h.cb_summary_figures(1) = uicontrol('style','checkbox','string','ece plot     ' ,'units','normalized','pos',[0   0 1/4 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
-h.cb_summary_figures(2) = uicontrol('style','checkbox','string','hist and dist' ,'units','normalized','pos',[1/4 0 1/4 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
-h.cb_summary_figures(3) = uicontrol('style','checkbox','string','roc curve    ' ,'units','normalized','pos',[2/4 0 1/4 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
-h.cb_summary_figures(4) = uicontrol('style','checkbox','string','tippett plot ' ,'units','normalized','pos',[3/4 0 1/4 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
+%h.cb_summary_figures(1) = uicontrol('style','checkbox','string','ece plot     ' ,'units','normalized','pos',[0   0 1/4 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
+h.cb_summary_figures(1) = uicontrol('style','checkbox','string','hist and dist' ,'units','normalized','pos',[0 0 1/3 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
+h.cb_summary_figures(2) = uicontrol('style','checkbox','string','roc curve    ' ,'units','normalized','pos',[1/3 0 1/3 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
+h.cb_summary_figures(3) = uicontrol('style','checkbox','string','tippett plot ' ,'units','normalized','pos',[2/3 0 1/3 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
 
 
 % this parent radiobuttongroup is for the choice of feature selection method
@@ -347,7 +347,7 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
             set(h.rb_feature_selection_method(:),'backgroundcolor','default','fontweight','n')
             % we limit the user in selecting the possible options
             %p5_call;
-            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.p18,h.cb_features,h.cb_labels,h.rb_samedistribution,h.rb_diffdistribution,h.cb_plots,h.popup1,h.popup2],'enable','off');
+            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.cb_features,h.cb_labels,h.rb_samedistribution,h.rb_diffdistribution,h.cb_plots,h.popup1,h.popup2],'enable','off');
             if(checked==1) %jacobs magical mystery tour
                 if(~isempty(str2num(get(h.t(10),'string')))&&strcmp(get(h.t(3),'string'),'distances computed'))
                     if(strcmp(get(h.p11,'string'),'Execute'))
@@ -464,7 +464,7 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
                 end
             end
             % Again, we allow the user to select all the possible options
-            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.p18,h.cb_features,h.cb_labels,h.cb_plots,h.popup1,h.popup2],'enable','on');
+            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.cb_features,h.cb_labels,h.cb_plots,h.popup1,h.popup2],'enable','on');
         end
     end
 
@@ -590,23 +590,23 @@ h.p16 = uicontrol('style','pushbutton','units','normalized','pos',...
     [x3+0.02,0.045,(0.99-x3-0.02-0.01)/2,0.025],'string','Plot summary figures',...
     'fontweight','b','callback',@p16_call);
     function p16_call(varargin)
-        if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(1),'value')==1)
-            %ece plot
-        end
+%         if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(1),'value')==1)
+%             %ece plot
+%         end
         
-        if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(2),'value')==1)
+        if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(1),'value')==1)
             % hist and dist
             figure('name','histogram and distributions')
             plot_distrib_and_hist;
         end
         
-        if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(3),'value')==1)
+        if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(2),'value')==1)
             % roc curve
             [labels, LRs] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, false);
             plotROC(LRs, labels); 
         end
         
-        if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(4),'value')==1)
+        if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(3),'value')==1)
             % tippett plot
             [labels, LRs] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, false);
             plotTippet(LRs(labels==1),LRs(labels==0)); 
