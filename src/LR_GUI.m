@@ -602,6 +602,8 @@ h.p16 = uicontrol('style','pushbutton','units','normalized','pos',...
         
         if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(2),'value')==1)
             % roc curve
+            [labels, LRs] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, false);
+            plotROC(LRs, labels); 
         end
         
         if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(3),'value')==1)
