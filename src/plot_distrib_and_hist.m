@@ -30,6 +30,18 @@ sameName = sameName{find(cell2mat(get(h.rb_samedistribution, 'Value')))};% the s
 difName = get(h.rb_diffdistribution, 'String');% the index of distribution for different batch
 difName = difName{find(cell2mat(get(h.rb_diffdistribution, 'Value')))};% the string value of distribution for same match, gotta love dynamic typing
 
+if strcmpi(sameName,'kde')
+    bandwidth_same = get(h.e2, 'String');
+else
+    bandwidth_same = [];
+end
+
+if strcmpi(difName,'kde')
+    bandwidth_diff = get(h.e3, 'String');
+else
+    bandwidth_diff = [];
+end
+    
 switch t
     case 4
         %four boxes checked
@@ -40,8 +52,8 @@ switch t
         [f_d_1,x1] = hist(distance_diff, b_centers);
         [~, b_t] = hist(tot_dat_temp, (numel(b_centers)*10));
         
-        [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, b_t, sameName);
-        [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, b_t, difName);
+        [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, b_t, sameName, bandwidth_same);
+        [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, b_t, difName, bandwidth_diff);
         bar(x1,f_s_1/trapz(x1,f_s_1),'FaceColor','r');
         bar(x1,f_d_1/trapz(x1,f_d_1),'FaceColor','b');
         plot(linspace(x1(1), x1(end), numel(pdf_out_diff)/10),pdf_out_diff(round(linspace(1,numel(pdf_out_diff), numel(pdf_out_diff)/10))),'color',[0.4219 0.6286 1],'linewidth',2);
@@ -65,13 +77,13 @@ switch t
         
         if(what_to_display(2)) % distribution same
             [~, b_t] = hist([0;tot_dat_temp], (numel(b_centers)*10));
-            [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, b_t, sameName);
+            [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, b_t, sameName, bandwidth_same);
             plot(linspace(x1(1), x1(end), n),pdf_out_same(round(linspace(1,numel(pdf_out_same), n))),'color',[1 .5 .5],'linewidth',2);
         end
         
         if(what_to_display(4)) % distribution different
             [~, b_t] = hist([0;tot_dat_temp], (numel(b_centers)*10));
-            [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, b_t, difName);
+            [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, b_t, difName, bandwidth_diff);
             plot(linspace(x1(1), x1(end), n),pdf_out_diff(round(linspace(1,numel(pdf_out_diff), n))),'color',[0.4219 0.6286 1],'linewidth',2);
         end
         
@@ -82,7 +94,7 @@ switch t
             b_centers = calcBins(distance_same);
             [f_s_1,x1] = hist(distance_same, b_centers);
             bar(x1,f_s_1/trapz(x1,f_s_1),'FaceColor','r');
-            [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, linspace(b_centers(1),b_centers(end),1000), sameName);
+            [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, linspace(b_centers(1),b_centers(end),1000), sameName, bandwidth_same);
             plot(linspace(x1(1), x1(end), n),pdf_out_same(round(linspace(1,numel(pdf_out_same), n))),'color',[1 .5 .5],'linewidth',2);
             
         elseif(what_to_display(3) || what_to_display(4)) && ~(what_to_display(1) || what_to_display(2))
@@ -90,7 +102,7 @@ switch t
             % we dont need to look at the same distances
             [f_d_1,x1] = hist(distance_diff, b_centers);
             bar(x1,f_d_1/trapz(x1,f_d_1),'FaceColor','b');
-            [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, linspace(b_centers(1),b_centers(end),1000), difName);
+            [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, linspace(b_centers(1),b_centers(end),1000), difName, bandwidth_diff);
             plot(linspace(x1(1), x1(end), n),pdf_out_diff(round(linspace(1,numel(pdf_out_diff), n))),'color',[0.4219 0.6286 1],'linewidth',2);
         else
             tot_dat_temp = [distance_same(:);distance_diff(:)];
@@ -108,12 +120,12 @@ switch t
             end
             
             if(what_to_display(2)) % distribution same
-                [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, b_t, sameName);
+                [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, b_t, sameName, bandwidth_same);
                 plot(linspace(x1(1), x1(end), n),pdf_out_same(round(linspace(1,numel(pdf_out_same), n))),'color',[1 .5 .5],'linewidth',2);
             end
             
             if(what_to_display(4)) % distribution different
-                [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, b_t, difName);
+                [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, b_t, difName, bandwidth_diff);
                 plot(linspace(x1(1), x1(end), n),pdf_out_diff(round(linspace(1,numel(pdf_out_diff), n))),'color',[0.4219 0.6286 1],'linewidth',2);
             end
         end
@@ -144,7 +156,7 @@ switch t
             t = get(h.rb_samedistribution, 'Value');
             temp = temp([t{:}]==1);
             
-            [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, linspace(b_t(1), b_t(end), n), temp);
+            [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, linspace(b_t(1), b_t(end), n), temp, bandwidth_same);
             plot(pdf_out_same,'color',[1 .5 .5],'linewidth',2);
         end
         
@@ -171,7 +183,7 @@ switch t
             t = get(h.rb_samedistribution, 'Value');
             temp = temp([t{:}]==1);
             
-            [pdf_out_same, parameters_diff] = fit_distrib_to_data(distance_diff, linspace(b_t(1), b_t(end), n), temp);
+            [pdf_out_same, parameters_diff] = fit_distrib_to_data(distance_diff, linspace(b_t(1), b_t(end), n), temp, bandwidth_diff);
             plot(pdf_out_same,'color',[0.4219 0.6286 1],'linewidth',2);
         end
 end
