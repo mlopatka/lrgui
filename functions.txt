@@ -1,0 +1,17 @@
+overview of the pushbuttons
+
+p0 := load data
+p1 := select features
+p2 := transform data
+p3 := calculate distances
+p4 := clear figure
+p5 := plot
+p6 := add preprocessing step
+p7 := clear workflow
+p8 := select all features
+p9 := select no  features
+p10:= select non zero standard deviation
+p11:= Execute feature selection method
+p12:= export population parameters
+p13:= data overview figure
+p14:= evaluate validation samples

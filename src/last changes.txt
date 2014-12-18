@@ -1,0 +1,122 @@
+14-05-2013 [M] changed folder structure to include {src,data,docs,figs} and version name. Cloned 'Combined' directory to 'Martin' directory
+
+14-05-2013 [M] started parseData.m for reading in data. Works for perfectly  formatted data, improvements planned to take various formats and file types.
+17-05-2013 [J] made separate m-files for the different pushbuttons. The code that reads the number of features, select their names and makes the appropriate number of checkboxes will be added tomorrow. Need to look into the how the folders are sorted
+
+31-05-2013 
+[M] added pop-up dialog asking user to point to a data file for this session
+[M] Added separate function for reading in different data types
+[M] Added error handling for format we specified. Now works for data files with any number of rows and columns. but ONLY with 1 row and 1 column of features and labels.
+
+09/07/2013 [M] updated preprocessing and metric options to "workflow mode" - functionality still in progress
+
+12/07/2013 [M] updated parseData.m to be consistent with our discussion on data labels.
+		New data format example is in ~\LR_GUI\Martin\v_1-0\data\data_NEWLABS.csv
+		New output format provides the following output:
+		data (matrix of doubles) 
+		labels (cell of strings)
+		labelNames (cell of strings)
+		featureNames (cell of strings)
+
+07/08/2013 [M] changed the label conversion function convertLabs.m to work with future user input
+
+07/08/2013 [M] updated preprocessing function to work with new "workflow" layout
+
+07/08/2013 [M] Loaded new MDMA test data.
+
+13/08/2013 [M] Added 'load data set button'
+
+13/08/2013 [M] moved the functions that populate all uibuttongroups  outside the LR_GUI.m file in order to allow users to select a new data set and clear out the old workflow without problems. 
+
+13/08/2013 [M]: changed the "calculate specific LR" to a button, added and inoput dialogue, and removed h_t(15). Reporting now done in the existing test areas. 
+
+13/08/2013 [M]: added Gaussian distribution option to the fitting options and the radio button interface.
+
+13/08/2013 [M]: Added functionality to plot the location of the LR value that is calculated by the user's request with a magenta line. 
+16/06/2013 [J] changed the name of a lot of buttons, buttongroups etc to make sure they are all under h and to be consistent. put all the same type of `things' i.e. buttons, texts, etc underneath eachother to make it more easier to 'read' the function. added a select all and a select none button for the features.
+
+02/10/2013 [M]: added error catching for many interface issues
+02/10/2013 [M]: fixed bug in the data normalization function
+02/10/2013 [M]: added 'confirmWorkflowValidity' function and some conditions already, we can add to these as we find new problems.
+02/10/2013 [M]: fixed mahalanobis distance option for positive definite covariance matrices
+02/10/2013 [M]: removed try/catch from distance calculation function
+02/10/2013 [M]: added export function'
+
+09/10/2013 [M]: fixed bug in the export button.
+09/10/2013 [M]: added LR_LAUNCHER interface and made hooks to communicate with LR GUI.
+09/10/2013 [M]: added exportPopParams.m new version with error handling 
+09/10/2013 [M]: replaced old calcscoreLR function with new evalLR.m function, with proper handling of different situations.
+16/10/2013 [M]: updated metric_call and transform_data_call to work when called from outside LR_GUI.
+16/10/2013 [M]: added functions to handle external checking of population vs new case data.
+16/10/2013 [M]: added a pile of functions in LR_LAUNCHER to evaluate case data.
+16/10/2013 [M]:  LR_LAUNCHER finished except for export report button.
+02/11/2013 [M]:  Added PCA-based feature selection
+02/11/2013 [M]:  prepared MDMA_sample data set for demo.
+
+16/01/2014 [J]: Added a KDE button. Error handling for transformations.
+17/01/2014 [J]: error handling for different transformations and metrics. Distributions are invisible if they will not be able to work on the data. 
+
+26/01/2014 [M]: Big changes in CLLR function to account for the posibility of one (or both) models to be KDE !!! 
+THERE IS A PROBLEM HERE STILL
+	
+26/01/2014 [M]: Added kde.m from the FEX.
+26/01/2014 [M]: changes inside fit_figure_call to allow kde as a non parametric density for the data.
+26/01/2014 [M]: fixed bug where popParams export has reversed order for features.
+26/01/2014 [M]: fixed bug where program crashes when user cancels dataset loading.
+26/01/2014 [M]: Added disclaimer text on gui
+
+03/02/2014 [J]: minor changes to some of the functions. Unused variables are removed from passing through.
+03/02/2014 [J]: all handles have fixed x-position. this way we can adept the interface quick and easy. It would be good to adept the interface to the loaded data.
+03/02/2014 [J]: added a text box in which we can give distribution specific information.
+03/02/2014 [J}: update the GUI during the magical mystery tour.
+WE NEED TO DO SOMETHING REGARDING THE SPEED. THE DIFFERENCE IS WITH BEFORE IS UNNECCESARY
+
+05/03/2014 [M]: split fit_figure_call into fourfunctions
+		fit_distrib_to_data.m
+		eval_performance_ofFit.m
+		plot_distrib_and_hist.m
+		display_performance.m
+06/03/2014 [M]: plotting functions work again, with new functions.
+
+07/03/2014 [M]: fixed KDE function to behave like pdf function
+07/03/2014 [M]: added date sensitive security check "checkThings.m"
+07/03/2014 [M]: added display function for population parameters.
+07/03/2014 [M]: fixed plotting bug in plots
+
+07/03/2014 [J]: jacob_feature_selection is working properly again
+07/03/2014 [J]: optimized the lay out of the summary text box in the rightbottom of the GUI
+07/03/2014 [J]: added a button that gives a boxplot of the transformed data
+07/03/2014 [J]: bold font and green background for same and different distribution pick
+
+07/03/2014 [J]: when loading new data, all the remaining boxes/etc. are set to their default state
+07/03/2014 [J]: separate function for plotting the boxplot
+07/03/2014 [J]: new outline of the plotting boxplot button
+07/03/2014 [J]: not possible to run jacob feature selection before running the model yourself once (could give an error before)
+
+10/03/2014 [J]: added checkboxes to select which data to show in additional figure
+10/03/2014 [J]: solved a problem that occurred due to a round off error that kept the jacob feature selection cycling.
+
+11/03/2014 [M]: added heatmap transformed data viewing function "heatmap_transformed_data.m"
+11/03/2014 [M]: added line plot transformed data viewing function "line_transformed_data.m"
+11/03/2014 [M]: added one line in evalCLLR.m to make lr_vals absolute values as a temporary fix!!!!
+25/03/2014 [M]: added all functionality in validation buttoin excepot KDE compatibility.
+
+25/03/2014 [J]: magical mystery tour works with KDE
+28/03/2014 [J]: cleaned up the LR GUI file, renamed most buttons to be consistent. 
+28/03/2014 [J]: checked_data is now a global variable declared in the beginning of the file
+28/03/2014 [J]: background color of all the correct boxes fixed
+28/03/2014 [J]: when using the magical mystery tour, the use of all buttons is prevented
+29/03/2014 [J]: the individual discrimination method now depends on the transformation.
+
+09/04/2014 [J]: solved error when using select features button when no features are selected
+
+21/07/2014 [J]: possible to select the features from a listbox. This way, with high numbers of features, it is still possible to read which are used or to select them by hand.
+22/07/2014 [J]: made a maximum number of runs for the Magical Mystery Tour. 
+
+30/07/2014 [J]: added the option 'txt' to exportPopParams.m to be able to save the population parameters as .txt file.
+31/07/2014 [J]: changed the final information dialog window. it now takes information from the LR_GUI instead of calling global variables inside the function.
+31/07/2014 [J]: added the number of comparisons for same and different source comparisons to the final information dialog window. added the number of sampels to the final information dialog window.
+31/07/2014 [J]: solved error that occurred when pushing validate samples and export population buttons before this was possible (when no plot was made)
+31/07/2014 [J]: solved error that occorred when cancelling the export population parameters operation when selecting a location to save the file.
+
+
