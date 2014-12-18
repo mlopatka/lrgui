@@ -7,7 +7,7 @@ plot(X, Y, 'Color', 'r', 'LineStyle', '-');
 figure_title = ['ROC Plot, Thresholds from LR [', num2str(T(end)),' to ', num2str(T(1)), ']'];
 
 title(figure_title)
-xlabel('False Possitive Rate')
+xlabel('False Positive Rate')
 ylabel('True Positive Rate')
 
 return
