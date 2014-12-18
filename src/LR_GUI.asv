@@ -606,8 +606,9 @@ h.p16 = uicontrol('style','pushbutton','units','normalized','pos',...
         
         if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(4),'value')==1)
             % tippett plot
-            [labels, LRs] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, false);
-            plotTippet(LRs(labels==1),LRs(labels==0)); 
+            [confusion_matrix, CLLR] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, false);
+
+            plotTippet
         end
     end
 

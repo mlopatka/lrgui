@@ -98,7 +98,6 @@ sum(pdf_DataDiff_ModelDiff<pdf_DataDiff_ModelSame), sum(pdf_DataDiff_ModelDiff>=
 % parameters_same, distribution_same, distribution_diff  );
 if ~called_from_plot_function
     CLLR = lr_vals;
-    confusion_matrix = labels;
 else
     CLLR = evalCLLR(confusion_matrix, labels, lr_vals);
 end 

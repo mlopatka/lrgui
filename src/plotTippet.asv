@@ -1,0 +1,35 @@
+function plotTippet(LR_same, LR_diff) 
+
+figure_title = 'Tippett Plot';
+LINE_STYLE = '-';
+
+LR_diff = LR_diff(:);
+LR_diffSrcSorted = sort(LR_diff);
+num_diffSrc_comparisons = length(LR_diff);
+cumPrDiffLRs = (num_diffSrc_comparisons:-1:1)/num_diffSrc_comparisons;
+
+LR_same = LR_same(:);
+LR_sameSrcSorted = LR_same;
+
+%     [LR_sorted_same_speaker, II_sorted_same_speaker] = sort(likelihood_ratio_same_speaker);
+    LR_sameSrcSorted = sort(LR_same);
+end
+log_LR_sorted_same_speaker = log10(LR_sorted_same_speaker);
+num_same_speaker_compared = length(LR_same);
+cumulative_proportion_same_speaker = (1:num_same_speaker_compared)/num_same_speaker_compared;
+
+% plot cumulative proportions against log10 LR values
+figure; % new figure!
+    plot([0 0], [0 1], 'Color', 'g', 'LineStyle', '-');
+    hold on
+    
+plot(LR_diffSrcSorted, cumPrDiffLRs, 'Color', 'r', 'LineStyle', LINE_STYLE);
+hold on
+plot(log_LR_sorted_same_speaker, cumulative_proportion_same_speaker, 'Color', 'b', 'LineStyle', LINE_STYLE);
+hold off
+title(figure_title)
+xlabel('Log10 Likelihood Ratio')
+ylabel('Cumulative Proportion')
+
+return
+
