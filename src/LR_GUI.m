@@ -622,15 +622,6 @@ h.p16 = uicontrol('style','pushbutton','units','normalized','pos',...
         end
     end
 
-%% load scores
-h.p18 = uicontrol('style','pushbutton','units','normalized','pos',...
-    [x2-0.06,0.97,0.06,0.025],'string','Load Scores',...
-    'fontweight','b','callback',@p18_call);
-    function p18_call(varargin)
-        set([h.p1,h.p2,h.p3,h.p6,h.p7,h.p8,h.p9,h.p10,h.p11,h.p13,h.p15,h.popup1,h.popup2,h.rb_feature_selection_method,h.cb_data_overview],'enable','off');
-    end
-
-
 %% create popup menus
 %% popup menu for different transformations
 trans_names = ['-mean';'norm ';'log  ';'log10';'sqrt ';'/std '];
