@@ -4,22 +4,23 @@ global transformed_data feature_data distance_same distance_diff loc parameters_
 warning 'off'
 
 %% we set the variables that determine the layout, this way we can more easily change the layout
-x1 = 0.005; %left  boundary left part    0.005
-x2 = 0.275; %right boundary left part    0.285
-x3 = 0.415; %right boundary middle part  0.430
+x1 = 0.005;  %left  boundary left part
+x2 = 0.275;  %right boundary left part
+x3 = 0.415;  %right boundary middle part
+x4 = 0.7175; %left boundary of right part
 
 %% create GUI-figure  ,'menu','none'
-h.g = figure('units','normalized','outerposition',[0 0.20 1 0.80],'toolbar','none','name','LR GUI','numbertitle','off');
+h.g = figure('units','normalized','outerposition',[0 0.2 1 0.8],'toolbar','none','name','LR GUI','numbertitle','off');
 
 %% create the buttongroups
 % this is the parent buttongroup for the feature selection checkboxes
-h.bg_features = uibuttongroup('visible','on','Title','Features','units','normalize','pos',[x1 0.10 x2-x1 0.87]);
+h.bg_features = uibuttongroup('visible','on','Title','Features','units','normalize','pos',[x1 0.07 x2-x1 0.90]);
 
 % this is the parent buttongroup for the label selection checkboxes
-h.bg_labels = uibuttongroup('visible','on','Title','Labels','units','normalize','pos',[x2+0.005 0.75 x3-(x2+0.005) 0.22]);
+h.bg_labels = uibuttongroup('visible','on','Title','Labels','units','normalize','pos',[x2+0.005 0.73 x3-(x2+0.005) 0.24]);
 
 % this is the parent buttongroup for the selection of which things to plot
-h.bg_plots = uibuttongroup('visible','on','Title','Plot','units','normalize','pos',[x3+0.02 0.30 (0.99-x3-0.02-0.01)/2 0.09]);
+h.bg_plots = uibuttongroup('visible','on','Title','Plot','units','normalize','pos',[x3+0.02 0.235 (0.99-x3-0.02-0.01)/2 0.09]);
 % create four checkboxes for selection the objects to plot
 h.cb_plots(1) = uicontrol('style','checkbox','string','same source histogram'        ,'units','normalized','pos',[0 0.5   0.5 0.49],'parent',h.bg_plots,'HandleVisibility','off','value',1);
 h.cb_plots(2) = uicontrol('style','checkbox','string','same source distribution'     ,'units','normalized','pos',[0   0   0.5 0.49],'parent',h.bg_plots,'HandleVisibility','off','value',1);
@@ -27,13 +28,13 @@ h.cb_plots(3) = uicontrol('style','checkbox','string','different source histogra
 h.cb_plots(4) = uicontrol('style','checkbox','string','different source distribution','units','normalized','pos',[0.5 0   0.5 0.49],'parent',h.bg_plots,'HandleVisibility','off','value',1);
 
 % here, we can select what plots to make of the transformed data
-h.bg_data_overview    = uibuttongroup('visible','on','Title','Data overview','units','normalize','pos',[x2+0.005,0.105,x3-(x2+0.005),0.06]);
+h.bg_data_overview    = uibuttongroup('visible','on','Title','Data overview','units','normalize','pos',[x2+0.005,0.04,x3-(x2+0.005),0.06]);
 h.cb_data_overview(1) = uicontrol('style','checkbox','string','boxplot' ,'units','normalized','pos',[0   0 1/3 1],'parent',h.bg_data_overview,'HandleVisibility','off','value',1);
 h.cb_data_overview(2) = uicontrol('style','checkbox','string','lineplot','units','normalized','pos',[1/3 0 1/3 1],'parent',h.bg_data_overview,'HandleVisibility','off','value',1);
 h.cb_data_overview(3) = uicontrol('style','checkbox','string','heatmap' ,'units','normalized','pos',[2/3 0 1/3 1],'parent',h.bg_data_overview,'HandleVisibility','off','value',1);
 
 % here, we can select what plots to make of the transformed data
-h.bg_summary_figures    = uibuttongroup('visible','on','Title','Summary figures','units','normalized','pos',[x3+0.02,0.105,(0.99-x3-0.02-0.01)/2,0.06]);
+h.bg_summary_figures    = uibuttongroup('visible','on','Title','Summary figures','units','normalized','pos',[x3+0.02,0.04,(0.99-x3-0.02-0.01)/2,0.06]);
 %h.cb_summary_figures(1) = uicontrol('style','checkbox','string','ece plot     ' ,'units','normalized','pos',[0   0 1/4 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
 h.cb_summary_figures(1) = uicontrol('style','checkbox','string','hist and dist' ,'units','normalized','pos',[0 0 1/3 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
 h.cb_summary_figures(2) = uicontrol('style','checkbox','string','roc curve    ' ,'units','normalized','pos',[1/3 0 1/3 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
@@ -41,7 +42,7 @@ h.cb_summary_figures(3) = uicontrol('style','checkbox','string','tippett plot ' 
 
 
 % this parent radiobuttongroup is for the choice of feature selection method
-h.bg_feature_selection =  uibuttongroup('visible','on','Title','Feature selection method','units','normalize','pos',[x2+0.005 0.225 x3-(x2+0.005) 0.17]);
+h.bg_feature_selection =  uibuttongroup('visible','on','Title','Feature selection method','units','normalize','pos',[x2+0.005 0.16 x3-(x2+0.005) 0.17]);
 % create three radiobuttons for selection of the method for feature selection
 h.rb_feature_selection_method(1) = uicontrol('style','radiobutton','string','Jacobs Magical Mystery Tour'     ,'units','normalized','pos',[0   0.75  0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',1);
 h.rb_feature_selection_method(2) = uicontrol('style','radiobutton','string','PCA determined features'         ,'units','normalized','pos',[0   0.50  0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',0);
@@ -49,7 +50,7 @@ h.rb_feature_selection_method(3) = uicontrol('style','radiobutton','string','Ran
 h.rb_feature_selection_method(4) = uicontrol('style','radiobutton','string','Individual discrimination method','units','normalized','pos',[0   0     0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',0);
 
 % determine distribution same source
-h.bg_same_distribution = uibuttongroup('visible','on','Title','same source distribution','units','normalized','pos',[x3+0.02,0.395,(0.99-x3-0.02-0.01)/2-0.06,0.06]);
+h.bg_same_distribution = uibuttongroup('visible','on','Title','same source distribution','units','normalized','pos',[x3+0.02,0.325,(0.99-x3-0.02-0.01)/2-0.06,0.06]);
 % create three radio buttons in the button group
 h.rb_samedistribution(1) = uicontrol('style','radiobutton','string','gamma'    ,'units','normalized','pos',[0.001,0.01,0.20,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
 h.rb_samedistribution(2) = uicontrol('style','radiobutton','string','lognormal','units','normalized','pos',[0.200,0.01,0.25,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
@@ -58,11 +59,11 @@ h.rb_samedistribution(4) = uicontrol('style','radiobutton','string','normal'   ,
 h.rb_samedistribution(5) = uicontrol('style','radiobutton','string','KDE'      ,'units','normalized','pos',[0.850,0.01,0.15,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
 
 %% manual KDE checkbox same source
-h.cb_kde_samesource = uicontrol('style','checkbox','string','' ,'units','normalized','pos',[x3+0.025 + (0.99-x3-0.02-0.01)/2-0.06,0.395,0.011,0.03],'HandleVisibility','off','value',0);
-h.t_kde_set_bandwidth_same_source = uicontrol('style','text','string','set bandwith' ,'units','normalized','pos',[x3+0.025 + (0.99-x3-0.02-0.01)/2-0.06,0.425,0.055,0.03]);
+h.cb_kde_samesource = uicontrol('style','checkbox','string','' ,'units','normalized','pos',[x3+0.025 + (0.99-x3-0.02-0.01)/2-0.06,0.325,0.011,0.03],'HandleVisibility','off','value',0);
+h.t_kde_set_bandwidth_same_source = uicontrol('style','text','string','set bandwith' ,'units','normalized','pos',[x3+0.025 + (0.99-x3-0.02-0.01)/2-0.06,0.355,0.055,0.03],'HorizontalAlignment','left');
 
 % determine distribution different source
-h.bg_diff_distribution = uibuttongroup('visible','on','Title','different source distribution','units','normalized','pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4,0.395,(0.99-x3-0.02-0.01)/2 - 0.06,0.06]);
+h.bg_diff_distribution = uibuttongroup('visible','on','Title','different source distribution','units','normalized','pos',[x4,0.325,(0.99-x3-0.02-0.01)/2 - 0.06,0.06]);
 % create three radio buttons in the button groupS
 h.rb_diffdistribution(1) = uicontrol('style','radiobutton','string','gamma'    ,'units','normalized','pos',[0.001,0.01,0.20,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
 h.rb_diffdistribution(2) = uicontrol('style','radiobutton','string','lognormal','units','normalized','pos',[0.200,0.01,0.25,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
@@ -71,12 +72,12 @@ h.rb_diffdistribution(4) = uicontrol('style','radiobutton','string','normal'   ,
 h.rb_diffdistribution(5) = uicontrol('style','radiobutton','string','KDE'      ,'units','normalized','pos',[0.850,0.01,0.15,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
 
 %% manual KDE checkbox same source
-h.cb_kde_diffsource = uicontrol('style','checkbox','string','' ,'units','normalized','pos',[x3+0.025+0.02+2*(0.99-x3-0.02-0.03)/4 + (0.99-x3-0.02-0.01)/2-0.06,0.395,0.011,0.03],'HandleVisibility','off','value',0);
-h.t_kde_set_bandwidth_diff_source = uicontrol('style','text','string','set bandwith' ,'units','normalized','pos',[x3+0.025+0.02+2*(0.99-x3-0.02-0.03)/4 + (0.99-x3-0.02-0.01)/2-0.06,0.425,0.055,0.03]);
+h.cb_kde_diffsource = uicontrol('style','checkbox','string','' ,'units','normalized','pos',                      [x3+0.025+0.02+2*(0.99-x3-0.02-0.03)/4 + (0.99-x3-0.02-0.01)/2-0.06,0.325,0.011,0.03],'HandleVisibility','off','value',0);
+h.t_kde_set_bandwidth_diff_source = uicontrol('style','text','string','set bandwith' ,'units','normalized','pos',[x3+0.025+0.02+2*(0.99-x3-0.02-0.03)/4 + (0.99-x3-0.02-0.01)/2-0.06,0.355,0.055,0.03],'HorizontalAlignment','left');
 
 
 %% create axes
-h.ax1 = axes('parent',h.g,'units','normalized','pos',[x3+0.02,0.50,0.99-x3-0.02,0.48]);
+h.ax1 = axes('parent',h.g,'units','normalized','pos',[x3+0.02,0.43,0.99-x3-0.02,0.54]);
 
 disclaimerText={'DISCLAIMER: This software is of a provisional nature and provided for research and academic use only. Commercial distribution is strictly prohibited. All calculations performed are to be treated as unvalidated with no guarantee of accuracy whatsoever. The software and constituent functions are still in development and have not been validated for use in forensic practice. This project is an individual initiative of the project contributors and is provided "as is" without warranty of any kind, either expressed or implied.'};
 
@@ -84,28 +85,28 @@ disclaimerText={'DISCLAIMER: This software is of a provisional nature and provid
 % create features_checked text
 h.t(1)  = uicontrol('style','text','units','normalized','pos',[x1+3/12*(x2-x1),0.040,1/2*(x2-x1),0.025],'string','no features selected','backgroundcolor',[.8,.3,.3],'fontweight','b');
 % create features_transformed text
-h.t(2)  = uicontrol('style','text','units','normalized','pos',[x2+0.005,0.510,x3-(x2+0.005),0.025],'string','no transformation selected','backgroundcolor',[.8,.3,.3],'fontweight','b');
+h.t(2)  = uicontrol('style','text','units','normalized','pos',[x2+0.005,0.445,x3-(x2+0.005),0.025],'string','no transformation selected','backgroundcolor',[.8,.3,.3],'fontweight','b');
 % create features_metric text
-h.t(3)  = uicontrol('style','text','units','normalized','pos',[x2+0.005,0.415,x3-(x2+0.005),0.025],'string','no metric selected','backgroundcolor',[.8,.3,.3],'fontweight','b');
+h.t(3)  = uicontrol('style','text','units','normalized','pos',[x2+0.005,0.35,x3-(x2+0.005),0.025],'string','no metric selected','backgroundcolor',[.8,.3,.3],'fontweight','b');
 % create same source and different source plot text
-h.t(4)  = uicontrol('style','text','units','normalized','pos',[x3+0.02,0.265,0.085,0.025],'string','false pos rate','fontsize',10,'fontweight','b');
-h.t(5)  = uicontrol('style','text','units','normalized','pos',[x3+0.02 + 0.085 + 0.005,0.265,0.085,0.025],'string','false neg rate','fontsize',10,'fontweight','b');
-h.t(6)  = uicontrol('style','text','units','normalized','pos',[x3+0.02 + 0.085 + 0.085 + 0.01,0.265,0.085,0.025],'string','CLLR','fontsize',10,'fontweight','b');
+h.t(4)  = uicontrol('style','text','units','normalized','pos',      [x3+0.02                         ,0.20,0.0875,0.025],'string','false pos rate','fontsize',10,'fontweight','b');
+h.t(5)  = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.005        ,0.20,0.0875,0.025],'string','false neg rate','fontsize',10,'fontweight','b');
+h.t(6)  = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.0875 + 0.01,0.20,0.0875,0.025],'string','CLLR','fontsize',10,'fontweight','b');
 % create textboxes to keep score of the fp fn and cllr values
-h.t(10) = uicontrol('style','text','units','normalized','pos',[x3+0.02,0.235,0.0850,0.025],'string','...','fontsize',10,'fontweight','bold');
-h.t(11) = uicontrol('style','text','units','normalized','pos',[x3+0.02 + 0.085 + 0.005,0.235,0.085 0.025],'string','...','fontsize',10,'fontweight','bold');
-h.t(12) = uicontrol('style','text','units','normalized','pos',[x3+0.02 + 0.085 + 0.085 + 0.01,0.235,0.085,0.025],'string','...','fontsize',10,'fontweight','bold');
-h.t(13) = uicontrol('style','pushbutton','units','normalized','pos',[x3+0.02,0.205,0.0850,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic','enable','off','callback',@p17_call);
-h.t(14) = uicontrol('style','text','units','normalized','pos',[x3+0.02 + 0.085 + 0.005,0.205,0.085,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
-h.t(15) = uicontrol('style','text','units','normalized','pos',[x3+0.02 + 0.085 + 0.085 + 0.01,0.205,0.085,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
-h.t(16) = uicontrol('style','pushbutton','units','normalized','pos',[x3+0.02,0.175,0.0850,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic','enable','off','callback',@p17_call);
-h.t(17) = uicontrol('style','text','units','normalized','pos',[x3+0.02 + 0.085 + 0.005,0.175,0.085,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
-h.t(18) = uicontrol('style','text','units','normalized','pos',[x3+0.02 + 0.085 + 0.085 + 0.01,0.175,0.085,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
+h.t(10) = uicontrol('style','text','units','normalized','pos',      [x3+0.02                         ,0.17,0.0875,0.025],'string','...','fontsize',10,'fontweight','bold');
+h.t(11) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.005        ,0.17,0.0875,0.025],'string','...','fontsize',10,'fontweight','bold');
+h.t(12) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.0875 + 0.01,0.17,0.0875,0.025],'string','...','fontsize',10,'fontweight','bold');
+h.t(13) = uicontrol('style','pushbutton','units','normalized','pos',[x3+0.02                         ,0.14,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic','enable','off','callback',@p17_call);
+h.t(14) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.005        ,0.14,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
+h.t(15) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.0875 + 0.01,0.14,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
+h.t(16) = uicontrol('style','pushbutton','units','normalized','pos',[x3+0.02                         ,0.11,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic','enable','off','callback',@p17_call);
+h.t(17) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.005        ,0.11,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
+h.t(18) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.0875 + 0.01,0.11,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
 
 % textbox with disclaimer text
-h.t(19) = uicontrol('style','text','units','normalized','pos',[x1,0.005,0.98,0.035],'string',disclaimerText{1},'fontsize',7);
+h.t(19) = uicontrol('style','text','units','normalized','pos',[x4,0.005,0.27,0.15],'string',disclaimerText{1},'fontsize',7,'HorizontalAlignment','left');
 % textbox with final model information
-h.t(20) = uicontrol('style','edit','units','normalized','pos',[x3+0.02+0.03+3*(0.99-x3-0.02-0.03)/4,0.22,(0.99-x3-0.02-0.03)/4,0.155],'string','final model information','fontsize',9,'max',2,'HorizontalAlignment','left');
+h.t(20) = uicontrol('style','edit','units','normalized','pos',[x3+0.02+0.03+3*(0.99-x3-0.02-0.03)/4,0.16,(0.99-x3-0.02-0.03)/4,0.155],'string','final model information','fontsize',9,'max',2,'HorizontalAlignment','left');
 % textbox with whether the data is loaded
 h.t(21) = uicontrol('style','text','units','normalized','pos',[x1+3/12*(x2-x1),0.97,1/2*(x2-x1),0.025],'string','no data loaded','backgroundcolor',[.8,.3,.3],'fontweight','b');
 
@@ -162,7 +163,7 @@ h.p0 = uicontrol('style','pushbutton','units','normalized',...
 
 %% select features pushbutton
 h.p1 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x1+13/24*(x2-x1)+0.006,0.07,7/24*(x2-x1),0.030],'string','SELECT FEATURES',...
+    'pos',[x1+13/24*(x2-x1)+0.006,0.005,7/24*(x2-x1),0.030],'string','SELECT FEATURES',...
     'fontweight','b','callback',@p1_call);
     function p1_call(varargin)
         if ~checkThings
@@ -182,7 +183,7 @@ h.p1 = uicontrol('style','pushbutton','units','normalized',...
 
 %% transform data pushbutton
 h.p2 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x2+0.005,0.54,x3-(x2+0.005),0.040],'string','TRANSFORM DATA',...
+    'pos',[x2+0.005,0.475,x3-(x2+0.005),0.040],'string','TRANSFORM DATA',...
     'fontweight','b','callback',@p2_call);
     function p2_call(varargin)
         if(strcmp(get(h.t(1),'string'),'features selected')) % check if features are selected
@@ -206,7 +207,7 @@ h.p2 = uicontrol('style','pushbutton','units','normalized',...
 
 %% calculate distances pushbutton
 h.p3 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x2+0.005+(x3-(x2+0.005))/2,0.445,(x3-(x2+0.005))/2,0.04],'string','CALC. DIST.',...
+    'pos',[x2+0.005+(x3-(x2+0.005))/2,0.38,(x3-(x2+0.005))/2,0.04],'string','CALC. DIST.',...
     'fontweight','b','callback',@p3_call);
     function p3_call(varargin)
         % check if features are selected and transformation has been done
@@ -251,7 +252,7 @@ h.p3 = uicontrol('style','pushbutton','units','normalized',...
 
 %% clear_figure pushbutton
 h.p4 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4,0.30,(0.99-x3-0.02-0.03)/4,0.035],'string','CLEAR FIGURE',...
+    'pos',[x4,0.24,(0.99-x3-0.02-0.03)/4,0.035],'string','CLEAR FIGURE',...
     'fontweight','b','callback',@p4_call);
     function p4_call(varargin)
         cla(h.ax1)
@@ -261,7 +262,7 @@ h.p4 = uicontrol('style','pushbutton','units','normalized',...
 
 %% plot pushbutton
 h.p5 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4,0.34,(0.99-x3-0.02-0.03)/4,0.035],'string','PLOT',...
+    'pos',[x4,0.28,(0.99-x3-0.02-0.03)/4,0.035],'string','PLOT',...
     'fontweight','b','callback',@p5_call);
     function p5_call(varargin)
         if ~checkThings
@@ -292,7 +293,7 @@ h.p5 = uicontrol('style','pushbutton','units','normalized',...
 
 %% add a preprocessing step to the workflow pushbutton
 h.p6 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x2+0.005+(x3-(x2+0.005))/2,0.70,(x3-(x2+0.01))/2,0.04],'string','add step >',...
+    'pos',[x2+0.005+(x3-(x2+0.005))/2,0.665,(x3-(x2+0.01))/2,0.04],'string','add step >',...
     'fontweight','b','callback',@p6_call);
     function p6_call(varargin)
         preProcs = get(h.popup1, 'String');
@@ -303,7 +304,7 @@ h.p6 = uicontrol('style','pushbutton','units','normalized',...
 
 %% clear workflow pushbutton
 h.p7 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x2+0.005,0.595,x3-(x2+0.005),0.030],'string','clear',...
+    'pos',[x2+0.005,0.53,x3-(x2+0.005),0.030],'string','clear',...
     'fontweight','b','callback',@p7_call);
     function p7_call(varargin)
         set(h.e1, 'String', 'data');
@@ -312,7 +313,7 @@ h.p7 = uicontrol('style','pushbutton','units','normalized',...
 
 %% select all features pushbutton
 h.p8 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x1+4/24*(x2-x1)+0.002,0.07,3/24*(x2-x1),0.030],'string','ALL',...
+    'pos',[x1+4/24*(x2-x1)+0.002,0.005,3/24*(x2-x1),0.030],'string','ALL',...
     'fontweight','b','callback',@p8_call);
     function p8_call(varargin)
         if(isfield(h,'cb_features')) % check if features exist
@@ -323,7 +324,7 @@ h.p8 = uicontrol('style','pushbutton','units','normalized',...
 
 %% select no features pushbutton
 h.p9 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x1+20/24*(x2-x1)+0.008,0.07,4/24*(x2-x1)-0.008,0.030],'string','NONE',...
+    'pos',[x1+20/24*(x2-x1)+0.008,0.005,4/24*(x2-x1)-0.008,0.030],'string','NONE',...
     'fontweight','b','callback',@p9_call);
     function p9_call(varargin)
         if(isfield(h,'cb_features')) % check if features exist
@@ -335,7 +336,7 @@ h.p9 = uicontrol('style','pushbutton','units','normalized',...
 
 %% non zero standard deviation feature selection pushbutton
 h.p10 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x1+7/24*(x2-x1)+0.004,0.07,6/24*(x2-x1),0.030],'string','NON-ZERO STD',...
+    'pos',[x1+7/24*(x2-x1)+0.004,0.005,6/24*(x2-x1),0.030],'string','NON-ZERO STD',...
     'fontweight','b','callback',@p10_call);
     function p10_call(varargin)
         if(isfield(h,'cb_features')) % check if features exist
@@ -347,7 +348,7 @@ h.p10 = uicontrol('style','pushbutton','units','normalized',...
 
 %% feature selection method execture pushbutton
 h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
-    [x2+0.005+1/8*(x3-(x2+0.005)),0.19,3/4*(x3-(x2+0.005)),0.03],'string','Execute',...
+    [x2+0.005+1/8*(x3-(x2+0.005)),0.115,3/4*(x3-(x2+0.005)),0.03],'string','Execute',...
     'fontweight','b','callback',@p11_call,'Interruptible','on');
     function p11_call(varargin)
         if(strcmp(get(h.t(3),'string'),'distances computed'))
@@ -479,7 +480,7 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
 
 %% export population parameters pushbutton
 h.p12 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4,0.26,(0.99-x3-0.02-0.03)/4,0.035],'string','Exp. Pop. Parameters',...
+    'pos',[x4,0.20,(0.99-x3-0.02-0.03)/4,0.035],'string','Exp. Pop. Parameters',...
     'fontweight','b','fontsize',9, 'callback', @p12_call);
     function p12_call(varargin)
         if(~strcmp('...',get(h.t(11),'string')))
@@ -511,7 +512,7 @@ h.p12 = uicontrol('style','pushbutton','units','normalized',...
 
 %% data overview plot pushbutton
 h.p13 = uicontrol('style','pushbutton','units','normalized','pos',...
-    [x2+0.005,0.07,x3-(x2+0.005),0.03],'string','Plot data overview',...
+    [x2+0.005,0.005,x3-(x2+0.005),0.03],'string','Plot data overview',...
     'fontweight','b','callback',@p13_call);
     function p13_call(varargin)
         if(strcmp(get(h.t(2),'string'),'transformation complete')&&get(h.cb_data_overview(1),'value')==1)
@@ -529,7 +530,7 @@ h.p13 = uicontrol('style','pushbutton','units','normalized','pos',...
 
 %% evaluate validation samples pushbutton
 h.p14 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4,0.22,(0.99-x3-0.02-0.03)/4,0.035],'string','Eval. Validation Samples',...
+    'pos',[x4,0.16,(0.99-x3-0.02-0.03)/4,0.035],'string','Eval. Validation Samples',...
     'fontweight','b','fontsize',9, 'callback', @p_14_call);
     function p_14_call(varargin)
         if(~strcmp('...',get(h.t(11),'string')))
@@ -576,7 +577,7 @@ h.p14 = uicontrol('style','pushbutton','units','normalized',...
 
 %% popup list with all the features, possible to select within the popup list
 h.p15 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x1,0.07,4/24*(x2-x1),0.030],'string','pop-up list',...
+    'pos',[x1,0.005,4/24*(x2-x1),0.030],'string','pop-up list',...
     'fontweight','b','callback',@p15_call);
     function p15_call(varargin)
         if ~checkThings
@@ -596,7 +597,7 @@ h.p15 = uicontrol('style','pushbutton','units','normalized',...
 %% summary figures plot pushbutton
 %[x3+0.02,0.08,(0.99-x3-0.02-0.01)/2,0.06]
 h.p16 = uicontrol('style','pushbutton','units','normalized','pos',...
-    [x3+0.02,0.07,(0.99-x3-0.02-0.01)/2,0.03],'string','Plot summary figures',...
+    [x3+0.02,0.005,(0.99-x3-0.02-0.01)/2,0.03],'string','Plot summary figures',...
     'fontweight','b','callback',@p16_call);
     function p16_call(varargin)
 %         if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(1),'value')==1)
@@ -637,22 +638,22 @@ h.p16 = uicontrol('style','pushbutton','units','normalized','pos',...
 %% popup menu for different transformations
 trans_names = ['exp  ';'-mean';'norm ';'log  ';'log10';'sqrt ';'/std '];
 h.popup1 = uicontrol('style','popupmenu', 'string', trans_names, ...
-    'units','normalized','pos',[x2+0.005,0.315,(x3-(x2+0.01))/2,0.425],'HandleVisibility','on');
+    'units','normalized','pos',[x2+0.005,0.28,(x3-(x2+0.01))/2,0.425],'HandleVisibility','on');
 %% pop up for different distance metrics
 metric_names = ['absolute dif';'bray-curtis ';'cannbera    ';'chebychev   ';'cityblock   ';'correlation ';'cosine      ';'euclidean   ';'mahalanobis '; 'minkowski   '];
 h.popup2= uicontrol('style','popupmenu', 'string', metric_names, ...
-    'units','normalized','pos',[x2+0.005,0.445,(x3-(x2+0.01))/2,0.040],'HandleVisibility','on');
+    'units','normalized','pos',[x2+0.005,0.38,(x3-(x2+0.01))/2,0.040],'HandleVisibility','on');
 
 %% workflow text edit, this is selectable but can not be manually edited. Only set by the use of the dropdowns.
 h.e1 = uicontrol('style','text','units','normalized',...
-    'pos',[x2+0.005,0.63,x3-(x2+0.005),0.06],'string','data','fontsize',10,'fontweight','b');
+    'pos',[x2+0.005,0.565,x3-(x2+0.005),0.09],'string','data','fontsize',10,'fontweight','b');
 
 %% manual selection of KDE bandwith same source
 h.e2 = uicontrol('style','edit','units','normalized',...
-    'pos',[x3+0.02 + (0.99-x3-0.02-0.01)/2-0.04 + 0.005 ,0.395,0.035,0.035],'string','0','fontsize',9);
+    'pos',[x3+0.02 + (0.99-x3-0.02-0.01)/2-0.04 + 0.005 ,0.325,0.035,0.035],'string','0','fontsize',9);
 
 %% manual selection of KDE bandwith different source distribution
 h.e3 = uicontrol('style','edit','units','normalized',...
-    'pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4 + + (0.99-x3-0.02-0.01)/2-0.04 + 0.005,0.395,0.035,0.035],'string','0','fontsize',9);
+    'pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4 + + (0.99-x3-0.02-0.01)/2-0.04 + 0.005,0.325,0.035,0.035],'string','0','fontsize',9);
 
 end
