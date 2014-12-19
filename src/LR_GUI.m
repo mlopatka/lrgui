@@ -60,7 +60,7 @@ h.rb_samedistribution(5) = uicontrol('style','radiobutton','string','KDE'      ,
 
 %% manual KDE checkbox same source
 h.cb_kde_samesource = uicontrol('style','checkbox','string','' ,'units','normalized','pos',[x3+0.025 + (0.99-x3-0.02-0.01)/2-0.06,0.325,0.011,0.03],'HandleVisibility','off','value',0);
-h.t_kde_set_bandwidth_same_source = uicontrol('style','text','string','set bandwith' ,'units','normalized','pos',[x3+0.025 + (0.99-x3-0.02-0.01)/2-0.06,0.355,0.055,0.03],'HorizontalAlignment','left');
+h.t_kde_set_bandwidth_same_source = uicontrol('style','text','string','set bandwidth' ,'units','normalized','pos',[x3+0.025 + (0.99-x3-0.02-0.01)/2-0.06,0.355,0.055,0.03],'HorizontalAlignment','left');
 
 % determine distribution different source
 h.bg_diff_distribution = uibuttongroup('visible','on','Title','different source distribution','units','normalized','pos',[x4,0.325,(0.99-x3-0.02-0.01)/2 - 0.06,0.06]);
@@ -73,7 +73,7 @@ h.rb_diffdistribution(5) = uicontrol('style','radiobutton','string','KDE'      ,
 
 %% manual KDE checkbox same source
 h.cb_kde_diffsource = uicontrol('style','checkbox','string','' ,'units','normalized','pos',                      [x3+0.025+0.02+2*(0.99-x3-0.02-0.03)/4 + (0.99-x3-0.02-0.01)/2-0.06,0.325,0.011,0.03],'HandleVisibility','off','value',0);
-h.t_kde_set_bandwidth_diff_source = uicontrol('style','text','string','set bandwith' ,'units','normalized','pos',[x3+0.025+0.02+2*(0.99-x3-0.02-0.03)/4 + (0.99-x3-0.02-0.01)/2-0.06,0.355,0.055,0.03],'HorizontalAlignment','left');
+h.t_kde_set_bandwidth_diff_source = uicontrol('style','text','string','set bandwidth' ,'units','normalized','pos',[x3+0.025+0.02+2*(0.99-x3-0.02-0.03)/4 + (0.99-x3-0.02-0.01)/2-0.06,0.355,0.055,0.03],'HorizontalAlignment','left');
 
 
 %% create axes
