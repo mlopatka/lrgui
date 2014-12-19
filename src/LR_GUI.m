@@ -5,8 +5,8 @@ warning 'off'
 
 %% we set the variables that determine the layout, this way we can more easily change the layout
 x1 = 0.005; %left  boundary left part    0.005
-x2 = 0.285; %right boundary left part    0.285
-x3 = 0.430; %right boundary middle part  0.430
+x2 = 0.275; %right boundary left part    0.285
+x3 = 0.415; %right boundary middle part  0.430
 
 %% create GUI-figure  ,'menu','none'
 h.g = figure('units','normalized','outerposition',[0 0.20 1 0.80],'toolbar','none','name','LR GUI','numbertitle','off');
@@ -49,7 +49,7 @@ h.rb_feature_selection_method(3) = uicontrol('style','radiobutton','string','Ran
 h.rb_feature_selection_method(4) = uicontrol('style','radiobutton','string','Individual discrimination method','units','normalized','pos',[0   0     0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',0);
 
 % determine distribution same source
-h.bg_same_distribution = uibuttongroup('visible','on','Title','same source distribution','units','normalized','pos',[x3+0.02,0.395,(0.99-x3-0.02-0.01)/2-0.04,0.06]);
+h.bg_same_distribution = uibuttongroup('visible','on','Title','same source distribution','units','normalized','pos',[x3+0.02,0.395,(0.99-x3-0.02-0.01)/2-0.06,0.06]);
 % create three radio buttons in the button group
 h.rb_samedistribution(1) = uicontrol('style','radiobutton','string','gamma'    ,'units','normalized','pos',[0.001,0.01,0.20,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
 h.rb_samedistribution(2) = uicontrol('style','radiobutton','string','lognormal','units','normalized','pos',[0.200,0.01,0.25,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
@@ -57,14 +57,23 @@ h.rb_samedistribution(3) = uicontrol('style','radiobutton','string','weibull'  ,
 h.rb_samedistribution(4) = uicontrol('style','radiobutton','string','normal'   ,'units','normalized','pos',[0.650,0.01,0.20,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
 h.rb_samedistribution(5) = uicontrol('style','radiobutton','string','KDE'      ,'units','normalized','pos',[0.850,0.01,0.15,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
 
+%% manual KDE checkbox same source
+h.cb_kde_samesource = uicontrol('style','checkbox','string','' ,'units','normalized','pos',[x3+0.025 + (0.99-x3-0.02-0.01)/2-0.06,0.395,0.011,0.03],'HandleVisibility','off','value',0);
+h.t_kde_set_bandwidth_same_source = uicontrol('style','text','string','set bandwith' ,'units','normalized','pos',[x3+0.025 + (0.99-x3-0.02-0.01)/2-0.06,0.425,0.055,0.03]);
+
 % determine distribution different source
-h.bg_diff_distribution = uibuttongroup('visible','on','Title','different source distribution','units','normalized','pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4,0.395,(0.99-x3-0.02-0.01)/2 - 0.04,0.06]);
+h.bg_diff_distribution = uibuttongroup('visible','on','Title','different source distribution','units','normalized','pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4,0.395,(0.99-x3-0.02-0.01)/2 - 0.06,0.06]);
 % create three radio buttons in the button groupS
 h.rb_diffdistribution(1) = uicontrol('style','radiobutton','string','gamma'    ,'units','normalized','pos',[0.001,0.01,0.20,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
 h.rb_diffdistribution(2) = uicontrol('style','radiobutton','string','lognormal','units','normalized','pos',[0.200,0.01,0.25,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
 h.rb_diffdistribution(3) = uicontrol('style','radiobutton','string','weibull'  ,'units','normalized','pos',[0.450,0.01,0.20,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
 h.rb_diffdistribution(4) = uicontrol('style','radiobutton','string','normal'   ,'units','normalized','pos',[0.650,0.01,0.20,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
 h.rb_diffdistribution(5) = uicontrol('style','radiobutton','string','KDE'      ,'units','normalized','pos',[0.850,0.01,0.15,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
+
+%% manual KDE checkbox same source
+h.cb_kde_diffsource = uicontrol('style','checkbox','string','' ,'units','normalized','pos',[x3+0.025+0.02+2*(0.99-x3-0.02-0.03)/4 + (0.99-x3-0.02-0.01)/2-0.06,0.395,0.011,0.03],'HandleVisibility','off','value',0);
+h.t_kde_set_bandwidth_diff_source = uicontrol('style','text','string','set bandwith' ,'units','normalized','pos',[x3+0.025+0.02+2*(0.99-x3-0.02-0.03)/4 + (0.99-x3-0.02-0.01)/2-0.06,0.425,0.055,0.03]);
+
 
 %% create axes
 h.ax1 = axes('parent',h.g,'units','normalized','pos',[x3+0.02,0.50,0.99-x3-0.02,0.48]);
@@ -640,10 +649,10 @@ h.e1 = uicontrol('style','text','units','normalized',...
 
 %% manual selection of KDE bandwith same source
 h.e2 = uicontrol('style','edit','units','normalized',...
-    'pos',[x3+0.02 + (0.99-x3-0.02-0.01)/2-0.04 + 0.005 ,0.395,0.035,0.045],'string','...','fontsize',10);
+    'pos',[x3+0.02 + (0.99-x3-0.02-0.01)/2-0.04 + 0.005 ,0.395,0.035,0.035],'string','0','fontsize',9);
 
 %% manual selection of KDE bandwith different source distribution
 h.e3 = uicontrol('style','edit','units','normalized',...
-    'pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4 + + (0.99-x3-0.02-0.01)/2-0.04 + 0.005,0.395,0.035,0.045],'string','...','fontsize',10);
+    'pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4 + + (0.99-x3-0.02-0.01)/2-0.04 + 0.005,0.395,0.035,0.035],'string','0','fontsize',9);
 
 end
