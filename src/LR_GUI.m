@@ -96,7 +96,7 @@ h.t(18) = uicontrol('style','text','units','normalized','pos',[x3+0.02 + 0.085 +
 % textbox with disclaimer text
 h.t(19) = uicontrol('style','text','units','normalized','pos',[x1,0.005,0.98,0.035],'string',disclaimerText{1},'fontsize',7);
 % textbox with final model information
-h.t(20) = uicontrol('style','edit','units','normalized','pos',[x3+0.02+0.03+3*(0.99-x3-0.02-0.03)/4,0.15,(0.99-x3-0.02-0.03)/4,0.22],'string','final model information','fontsize',9,'max',2,'HorizontalAlignment','left');
+h.t(20) = uicontrol('style','edit','units','normalized','pos',[x3+0.02+0.03+3*(0.99-x3-0.02-0.03)/4,0.22,(0.99-x3-0.02-0.03)/4,0.155],'string','final model information','fontsize',9,'max',2,'HorizontalAlignment','left');
 % textbox with whether the data is loaded
 h.t(21) = uicontrol('style','text','units','normalized','pos',[x1+3/12*(x2-x1),0.97,1/2*(x2-x1),0.025],'string','no data loaded','backgroundcolor',[.8,.3,.3],'fontweight','b');
 
@@ -470,8 +470,8 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
 
 %% export population parameters pushbutton
 h.p12 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[0.75,0.09,0.2,0.03],'string','Export Population Parameters',...
-    'fontweight','b','fontsize',11, 'callback', @p12_call);
+    'pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4,0.26,(0.99-x3-0.02-0.03)/4,0.035],'string','Exp. Pop. Parameters',...
+    'fontweight','b','fontsize',9, 'callback', @p12_call);
     function p12_call(varargin)
         if(~strcmp('...',get(h.t(11),'string')))
             vals = get(h.rb_samedistribution,'Value');
@@ -520,8 +520,8 @@ h.p13 = uicontrol('style','pushbutton','units','normalized','pos',...
 
 %% evaluate validation samples pushbutton
 h.p14 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[0.75,0.05,0.2,0.03],'string','Evaluate Validation Samples',...
-    'fontweight','b','fontsize',11, 'callback', @p_14_call);
+    'pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4,0.22,(0.99-x3-0.02-0.03)/4,0.035],'string','Eval. Validation Samples',...
+    'fontweight','b','fontsize',9, 'callback', @p_14_call);
     function p_14_call(varargin)
         if(~strcmp('...',get(h.t(11),'string')))
             % get different and same distribution

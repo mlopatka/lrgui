@@ -13,7 +13,7 @@ LR_sameSrcSorted = sort(LR_same);
 num_sameSrc_comparisons = numel(LR_same);
 cumPrSameLRs = (1:num_sameSrc_comparisons)/num_sameSrc_comparisons;
 
-figure; % new figure calle dinside function, so we can avoid handles figures of LR_GUI
+figure('name','Tippett plot'); % new figure calle dinside function, so we can avoid handles figures of LR_GUI
 plot([0 0], [0 1], 'Color', 'g', 'LineStyle', '-');
 
 hold on, plot(LR_diffSrcSorted, cumPrDiffLRs, 'Color', 'r', 'LineStyle', LINE_STYLE);
