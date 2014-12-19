@@ -31,15 +31,23 @@ difName = get(h.rb_diffdistribution, 'String');% the index of distribution for d
 difName = difName{find(cell2mat(get(h.rb_diffdistribution, 'Value')))};% the string value of distribution for same match, gotta love dynamic typing
 
 if strcmpi(sameName,'kde')
-    bandwidth_same = get(h.e2, 'String');
+    if get(h.cb_kde_samesource, 'Value') == 1
+        bandwidth_same = str2double(get(h.e2, 'String'));
+    else
+        bandwidth_same = double.empty;
+    end
 else
     bandwidth_same = [];
 end
 
 if strcmpi(difName,'kde')
-    bandwidth_diff = get(h.e3, 'String');
+    if get(h.cb_kde_diffsource, 'Value') == 1
+        bandwidth_diff = str2double(get(h.e3, 'String'));
+    else
+        bandwidth_diff = double.empty;
+    end
 else
-    bandwidth_diff = [];
+    bandwidth_diff = double.empty;
 end
     
 switch t
@@ -205,6 +213,14 @@ if(what_to_display(1)||what_to_display(3))
         set(legh,'Fontsize',13)
         set(objh,'linewidth',2)
     end
+end
+
+%update the kde parameter box even if it hasnt changed or is nt in use
+if strcmpi(sameName,'kde')
+    set(h.e2, 'String', num2str(parameters_same(1)));
+end
+if strcmpi(difName,'kde')
+    set(h.e3, 'String', num2str(parameters_diff(1)));
 end
 
 % we color the checkboxes corresponding to the shown plots

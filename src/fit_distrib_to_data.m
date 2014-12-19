@@ -30,8 +30,8 @@ elseif(strcmpi(dist_type,'normal'))%gaussian
     %distribution_same = 'normal';
 elseif(strcmpi(dist_type,'kde'))%kernel density
 %     [parameters(1), pdf_out, ~, ~] = kde(distances, x_vals, numel(x_vals));
-    if numel(varargin)>=4
-        bandwidthVal= str2double(varargin{4}); 
+    if ~isempty(varargin{4})
+        bandwidthVal= varargin{4}; 
         [pdf_out,~,parameters(1)]= ksdensity(distances, x_vals, 'support', 'positive', 'bandwidth', bandwidthVal);
     else
         [pdf_out,~,parameters(1)]= ksdensity(distances, x_vals, 'support', 'positive');
