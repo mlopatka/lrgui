@@ -203,15 +203,12 @@ if(what_to_display(1)||what_to_display(3))
     if(what_to_display(1)&&what_to_display(3))
         [legh,objh,~,~]=legend(histo,'different source','same source');
         set(legh,'Fontsize',13)
-        set(objh,'linewidth',2)
     elseif(what_to_display(1))
         [legh,objh,~,~]=legend(histo,'same source');
         set(legh,'Fontsize',13)
-        set(objh,'linewidth',2)
     else
         [legh,objh,~,~]=legend(histo,'different source');
         set(legh,'Fontsize',13)
-        set(objh,'linewidth',2)
     end
 end
 

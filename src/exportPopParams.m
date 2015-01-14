@@ -1,5 +1,9 @@
 function [exportLocation, successFlag] =exportPopParams(wrkflw, distribution_same, distribution_diff, labels_active, flag)
-global transformed_data feature_data distance_same distance_diff loc parameters_diff parameters_same h
+global distance_same distance_diff loc parameters_diff parameters_same h
+
+if ~strcmpi(flag, 'txt')
+    global transformed_data feature_data
+end
 
 exportLocation = 0; successFlag = 0;
 switch flag
@@ -45,7 +49,7 @@ switch flag
         if isnumeric(fileName)
             disp('invalid export location or filename');
         else
-            fileID = fopen([filePath fileName],'w');
+            fileID = fopen([filePath, fileName], 'w');
             
             fprintf(fileID,['time stamp                                          : ' datestr(now) '\r\n']);
             fprintf(fileID,['workflow                                            : ' wrkflw '\r\n']);
