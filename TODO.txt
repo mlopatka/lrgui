@@ -1,21 +1,27 @@
+ROADMAP EAFS version:
 1.  documentation
 2.  tooltips
 3.  exportPopParams, plot_distrib_and_hist, populate_Features, populate_Labels, post_params_to_gui all have global variables set in the beginning of the functions it is better to pass them in from LR_GUI
 4.  Remove clear figure button
-5.  ? colors for same and different source.
-6.  internal cross validation for feature selection
-7.  clicking on old performance statistics will restore old settings
-8.  waitbars for plots and feature selection methods
+5.  internal cross validation for feature selection
+6.  waitbars for plots and feature selection methods
 
-9. smarter input of data
-10. new kde function (in c++)
+7. smarter input of data
+8. new kde function (in c++)
 
-11. validation of LRs by didier meuwly method
-12. new transformations, (new metrics?)
+9. validation of LRs by didier meuwly method
+10. new transformations, (new metrics?)
 
-13. Allow setting up range Y axis
-14. Allow for transformation of data features to be applied to only some features
-15. cross validation in the background
-16. feature selection method, dropdown menu
-17. restructure buttongroups, reduce to two line
-21.
+11. Allow for transformation of data features to be applied to only some features
+12. cross validation in the background
+13. feature selection method, dropdown menu
+
+ROADMAP trace-anchored version:
+1.  documentation
+2.  tooltips
+3.  internal cross validation for feature selection
+4. cross validation in the background
+
+5. x, y, z style data division
+6. selection of target numerator population (x distribution)
+7. Different LR output routine
