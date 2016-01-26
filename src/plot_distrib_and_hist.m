@@ -15,6 +15,7 @@ what_to_display = logical(cell2mat(get(h.cb_plots, 'Value'))); %what are we plot
 n = 1000; % default bin size
 
 cla(gca);
+legend('')
 hold on;
 
 t = sum(what_to_display);
@@ -49,168 +50,84 @@ if strcmpi(difName,'kde')
 else
     bandwidth_diff = double.empty;
 end
-    
-switch t
-    case 4
-        %four boxes checked
-        tot_dat_temp = [distance_same(:);distance_diff(:)];
-        b_centers = calcBins(tot_dat_temp);
-        %need bins that accomodate all data same and diff distances.
-        [f_s_1,~] = hist(distance_same, b_centers);
-        [f_d_1,x1] = hist(distance_diff, b_centers);
-        [~, b_t] = hist(tot_dat_temp, (numel(b_centers)*10));
-        
-        [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, b_t, sameName, bandwidth_same);
-        [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, b_t, difName, bandwidth_diff);
-        bar(x1,f_s_1/trapz(x1,f_s_1),'FaceColor','r');
-        bar(x1,f_d_1/trapz(x1,f_d_1),'FaceColor','b');
-        plot(linspace(x1(1), x1(end), numel(pdf_out_diff)/10),pdf_out_diff(round(linspace(1,numel(pdf_out_diff), numel(pdf_out_diff)/10))),'color',[0.4219 0.6286 1],'linewidth',2);
-        plot(linspace(x1(1), x1(end), numel(pdf_out_same)/10),pdf_out_same(round(linspace(1,numel(pdf_out_same), numel(pdf_out_same)/10))),'color',[1 .5 .5],'linewidth',2);
-        
-    case 3
-        % three boxes checked
-        tot_dat_temp = [distance_same(:);distance_diff(:)];
-        b_centers = calcBins(tot_dat_temp);
-        %need bins that accomodate all data same and diff distances.
-        [f_s_1,x1] = hist(distance_same, b_centers);
-        [f_d_1,x1] = hist(distance_diff, b_centers);
-        [~, b_t] = hist([0;tot_dat_temp], (numel(b_centers)*10));
-        if(what_to_display(1)) % histogram same
-            bar(x1,f_s_1/trapz(x1,f_s_1),'FaceColor','r');
-        end
-        
-        if(what_to_display(3)) % histogram different
-            bar(x1,f_d_1/trapz(x1,f_d_1),'FaceColor','b');
-        end
-        
-        if(what_to_display(2)) % distribution same
-            [~, b_t] = hist([0;tot_dat_temp], (numel(b_centers)*10));
-            [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, b_t, sameName, bandwidth_same);
-            plot(linspace(x1(1), x1(end), n),pdf_out_same(round(linspace(1,numel(pdf_out_same), n))),'color',[1 .5 .5],'linewidth',2);
-        end
-        
-        if(what_to_display(4)) % distribution different
-            [~, b_t] = hist([0;tot_dat_temp], (numel(b_centers)*10));
-            [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, b_t, difName, bandwidth_diff);
-            plot(linspace(x1(1), x1(end), n),pdf_out_diff(round(linspace(1,numel(pdf_out_diff), n))),'color',[0.4219 0.6286 1],'linewidth',2);
-        end
-        
-    case 2
-        % two boxes checked
-        if(what_to_display(1) || what_to_display(2)) && ~(what_to_display(3) || what_to_display(4))
-            % we dont need to look at the different distances
-            b_centers = calcBins(distance_same);
-            [f_s_1,x1] = hist(distance_same, b_centers);
-            bar(x1,f_s_1/trapz(x1,f_s_1),'FaceColor','r');
-            [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, linspace(b_centers(1),b_centers(end),1000), sameName, bandwidth_same);
-            plot(linspace(x1(1), x1(end), n),pdf_out_same(round(linspace(1,numel(pdf_out_same), n))),'color',[1 .5 .5],'linewidth',2);
-            
-        elseif(what_to_display(3) || what_to_display(4)) && ~(what_to_display(1) || what_to_display(2))
-            b_centers = calcBins(distance_diff);
-            % we dont need to look at the same distances
-            [f_d_1,x1] = hist(distance_diff, b_centers);
-            bar(x1,f_d_1/trapz(x1,f_d_1),'FaceColor','b');
-            [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, linspace(b_centers(1),b_centers(end),1000), difName, bandwidth_diff);
-            plot(linspace(x1(1), x1(end), n),pdf_out_diff(round(linspace(1,numel(pdf_out_diff), n))),'color',[0.4219 0.6286 1],'linewidth',2);
-        else
-            tot_dat_temp = [distance_same(:);distance_diff(:)];
-            b_centers = calcBins(tot_dat_temp);
-            %need bins that accomodate all data same and diff distances.
-            [f_s_1,x1] = hist(distance_same, b_centers);
-            [f_d_1,x1] = hist(distance_diff, b_centers);
-            [~, b_t] = hist([0;tot_dat_temp], (numel(b_centers)*10));
-            if(what_to_display(1)) % histogram same
-                bar(x1,f_s_1/trapz(x1,f_s_1),'FaceColor','r');
-            end
-            
-            if(what_to_display(3)) % histogram different
-                bar(x1,f_d_1/trapz(x1,f_d_1),'FaceColor','b');
-            end
-            
-            if(what_to_display(2)) % distribution same
-                [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, b_t, sameName, bandwidth_same);
-                plot(linspace(x1(1), x1(end), n),pdf_out_same(round(linspace(1,numel(pdf_out_same), n))),'color',[1 .5 .5],'linewidth',2);
-            end
-            
-            if(what_to_display(4)) % distribution different
-                [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, b_t, difName, bandwidth_diff);
-                plot(linspace(x1(1), x1(end), n),pdf_out_diff(round(linspace(1,numel(pdf_out_diff), n))),'color',[0.4219 0.6286 1],'linewidth',2);
-            end
-        end
-    case 1
-        % one boxes checked
-        if(what_to_display(1))
-            %% print the bar graph of data 1
-            nbins = ceil((max(distance_same)-min(distance_same))/(2*diff(prctile(distance_same, [25; 75]))*length(distance_same)^(-1/3)));
-            % determine the best number of bins
-            if(~isinf(nbins))
-                [f_s_1,x1] = hist(distance_same, nbins);
-            else
-                [f_s_1,x1] = hist(distance_same, 100); %default option is 100 bins
-            end
-            bar(x1,f_s_1/trapz(x1,f_s_1),'FaceColor','r');
-            %%%%% gca?
-        end
-        
-        if(what_to_display(2))
-            nbins = ceil((max(distance_same)-min(distance_same))/(2*diff(prctile(distance_same, [25; 75]))*length(distance_same)^(-1/3)));
-            b_centers = linspace(0, max(distance_same), nbins);
-            if(~isinf(nbins))
-                b_t = b_centers;
-            else
-                [~, b_t] = hist(distance_same, nbins);
-            end
-            temp = get(h.rb_samedistribution, 'String');% the index of distribution for same batch
-            t = get(h.rb_samedistribution, 'Value');
-            temp = temp([t{:}]==1);
-            
-            [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, linspace(b_t(1), b_t(end), n), temp, bandwidth_same);
-            plot(pdf_out_same,'color',[1 .5 .5],'linewidth',2);
-        end
-        
-        if(what_to_display(3))
-            %% print the bar graph of data 2
-            nbins = ceil((max(distance_diff)-min(distance_diff))/(2*diff(prctile(distance_diff, [25; 75]))*length(distance_diff)^(-1/3)));
-            if(~isinf(nbins))
-                [f_s_1,x1] = hist(distance_diff, nbins);
-            else
-                [f_s_1,x1] = hist(distance_diff, 100); %default option is 100 bins
-            end
-            bar(x1,f_s_1/trapz(x1,f_s_1),'FaceColor','b');
-        end
-        
-        if(what_to_display(4))
-            nbins = ceil((max(distance_diff)-min(distance_diff))/(2*diff(prctile(distance_diff, [25; 75]))*length(distance_diff)^(-1/3)));
-            b_centers = linspace(0, max(distance_diff), nbins);
-            if(~isinf(nbins))
-                b_t = b_centers;
-            else
-                [~, b_t] = hist([0;tot_dat_temp], (numel(b_centers)*10));
-            end
-            temp = get(h.rb_diffdistribution, 'String');% the index of distribution for same batch
-            t = get(h.rb_samedistribution, 'Value');
-            temp = temp([t{:}]==1);
-            
-            [pdf_out_same, parameters_diff] = fit_distrib_to_data(distance_diff, linspace(b_t(1), b_t(end), n), temp, bandwidth_diff);
-            plot(pdf_out_same,'color',[0.4219 0.6286 1],'linewidth',2);
-        end
+
+
+%% set all parameters
+nbins_same = ceil((max(distance_same)-min(distance_same))/(2*diff(prctile(distance_same, [25; 75]))*length(distance_same)^(-1/3)));
+b_centers_same = linspace(0, max(distance_same), nbins_same);
+% determine the best number of bins
+if(~isinf(nbins_same))
+    [f_s_1,x1_same] = hist(distance_same, nbins_same);
+    b_t_same = b_centers_same;
+else
+    [f_s_1,x1_same] = hist(distance_same, 100); %default option is 100 bins
+    [~, b_t_same] = hist(distance_same, nbins_same);
 end
 
-if(what_to_display(1)||what_to_display(3))
-    histo = findobj(gca,'Type','patch');
-    %we make the histograms slightly transparent
-    set(histo,'FaceAlpha',0.2)
-    if(what_to_display(1)&&what_to_display(3))
-        [legh,objh,~,~]=legend(histo,'different source','same source');
-        set(legh,'Fontsize',13)
-    elseif(what_to_display(1))
-        [legh,objh,~,~]=legend(histo,'same source');
-        set(legh,'Fontsize',13)
-    else
-        [legh,objh,~,~]=legend(histo,'different source');
-        set(legh,'Fontsize',13)
-    end
+nbins_diff = ceil((max(distance_diff)-min(distance_diff))/(2*diff(prctile(distance_diff, [25; 75]))*length(distance_diff)^(-1/3)));
+b_centers_diff = linspace(0, max(distance_diff), nbins_diff);
+if(~isinf(nbins_diff))
+    [f_d_1,x1_diff] = hist(distance_diff, nbins_diff);
+    b_t_diff = b_centers_diff;
+else
+    [f_d_1,x1_diff] = hist(distance_diff, 100); %default option is 100 bins
+    [~, b_t_diff] = hist([0;tot_dat_temp], (numel(b_centers)*10));
 end
+
+%% plot everything separately
+if(what_to_display(1)) % histogram same label data
+    %% print the bar graph of same label data
+    b_same = bar(x1_same,f_s_1/trapz(x1_same,f_s_1),'hist');
+    set(b_same,'FaceColor','red','FaceAlpha',0.2);
+end
+
+if(what_to_display(2))
+    same_distan = get(h.rb_samedistribution, 'String');% the index of distribution for same batch
+    t = get(h.rb_samedistribution, 'Value');
+    same_distan  = same_distan ([t{:}]==1);
+    
+    [pdf_out_same, parameters_same] = fit_distrib_to_data(distance_same, linspace(b_t_same(1), b_t_same(end), n), same_distan , bandwidth_same);
+    plot(linspace(b_t_same(1), b_t_same(end), n),pdf_out_same,'color',[1 .5 .5],'linewidth',2);
+end
+
+if(what_to_display(3))
+    %% print the bar graph of the diff label data
+    b_diff = bar(x1_diff,f_d_1/trapz(x1_diff,f_d_1),'hist');
+    set(b_diff,'FaceColor','blue','FaceAlpha',0.2);
+end
+
+if(what_to_display(4))
+    diff_distan = get(h.rb_diffdistribution, 'String');% the index of distribution for same batch
+    t = get(h.rb_samedistribution, 'Value');
+    diff_distan = diff_distan([t{:}]==1);
+    
+    [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, linspace(b_t_diff(1), b_t_diff(end), n), diff_distan, bandwidth_diff);
+    plot(linspace(b_t_diff(1), b_t_diff(end), n),pdf_out_diff,'color',[0.4219 0.6286 1],'linewidth',2);
+end
+
+%% make and display legend
+if(sum(what_to_display)>0)
+    legend_1 = cell(sum(what_to_display),1);
+    k = 1;
+    if(what_to_display(1)==1)
+        legend_1{k} = 'same source histogram';
+        k = k + 1;
+    end
+    if(what_to_display(2)==1)
+        legend_1{k} = 'same source distribution';
+        k = k + 1;
+    end
+    if(what_to_display(3)==1)
+        legend_1{k} = 'diff source histogram';
+        k = k + 1;
+    end
+    if(what_to_display(4)==1)
+        legend_1{k} = 'diff source distribution';
+    end
+    [leg,~,~,~]=legend(gca,legend_1);
+    set(leg,'Fontsize',13)
+end
+
 
 %update the kde parameter box even if it hasnt changed or is nt in use
 if strcmpi(sameName,'kde')

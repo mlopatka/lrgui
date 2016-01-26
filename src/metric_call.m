@@ -46,7 +46,7 @@ switch metric
         dist = pdist(transformed_data,'correlation');
     case 'cannbera    ' %cannbera
         dist = pdist(transformed_data, @cannberaDist);
-    case 'minkowski   ' %cannbera
+    case 'minkowski   ' %minkowsi'
         dist = pdist(transformed_data,'minkowski',0.5);
     case 'chebychev   ' %chebychev
         dist = pdist(transformed_data,'chebychev');
