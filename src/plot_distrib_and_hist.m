@@ -18,7 +18,6 @@ cla(gca);
 legend('')
 hold on;
 
-t = sum(what_to_display);
 % we set green backgroundcolors to the used distributions
 set(h.rb_samedistribution(:),'backgroundcolor','default','fontweight','n');
 set(h.rb_samedistribution(logical(cell2mat(get(h.rb_samedistribution, 'Value')))),'backgroundcolor',[.7,.9,.7],'fontweight','b');
@@ -98,7 +97,7 @@ end
 
 if(what_to_display(4))
     diff_distan = get(h.rb_diffdistribution, 'String');% the index of distribution for same batch
-    t = get(h.rb_samedistribution, 'Value');
+    t = get(h.rb_diffdistribution, 'Value');
     diff_distan = diff_distan([t{:}]==1);
     
     [pdf_out_diff, parameters_diff] = fit_distrib_to_data(distance_diff, linspace(b_t_diff(1), b_t_diff(end), n), diff_distan, bandwidth_diff);
