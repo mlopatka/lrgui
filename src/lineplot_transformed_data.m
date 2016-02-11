@@ -42,6 +42,6 @@ function lineplot_transformed_data( transformed_data, h_c, labels, h_c_labels )
             grid on
             set(gca,'XTick',[1:size(transformed_data,2)]);
             set(gca,'XTickLabel',[names{:}]);
-            rotateXLabels(gca, 90);
+%             rotateXLabels(gca, 90);
             hold off;         
 end

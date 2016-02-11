@@ -12,7 +12,7 @@ function heatmap_transformed_data( transformed_data, h_c )
         %set(gca,'YTick',[1:20:size(transformed_data,1)]);
         set(gca,'XTick',[1:size(transformed_data,2)]);
         set(gca,'XTickLabel',[names{:}]);
-        rotateXLabelsIMGSC(gca, -70);        
+        %rotateXLabelsIMGSC(gca, -70);        
         
         hold off;         
 end
