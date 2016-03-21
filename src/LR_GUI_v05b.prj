@@ -1,0 +1,143 @@
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration build-checksum="1146356815" file="C:\Users\martin\repos\LR_GUI\src\LR_GUI_v05b.prj" location="C:\Users\martin\repos\LR_GUI\src" name="LR_GUI_v05b" preferred-package-location="C:\Users\martin\repos\LR_GUI\src\LR_GUI_v05b\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications">
+    <param.appname>LR_GUI_v05b</param.appname>
+    <param.icon />
+    <param.icons />
+    <param.version>1.1</param.version>
+    <param.authnamewatermark />
+    <param.email />
+    <param.company />
+    <param.summary />
+    <param.description />
+    <param.screenshot />
+    <param.guid />
+    <param.installpath.string>\LR_GUI_v05b\</param.installpath.string>
+    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
+    <param.logo />
+    <param.install.notes />
+    <param.intermediate>${PROJECT_ROOT}\LR_GUI_v05b\for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}\LR_GUI_v05b\for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}\LR_GUI_v05b\for_redistribution</param.output>
+    <param.enable.clean.build>false</param.enable.clean.build>
+    <param.user.defined.mcr.options />
+    <param.embed.ctf>true</param.embed.ctf>
+    <param.server.ctf>${PROJECT_ROOT}\LR_GUI_v05b\for_testing\.ctf</param.server.ctf>
+    <param.server.readme>${PROJECT_ROOT}\LR_GUI_v05b\for_testing\readme.txt</param.server.readme>
+    <param.target.type>subtarget.standalone</param.target.type>
+    <param.support.packages />
+    <param.required.mcr.products>
+      <item>35000</item>
+      <item>35001</item>
+    </param.required.mcr.products>
+    <param.web.mcr>false</param.web.mcr>
+    <param.package.mcr>true</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
+    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.windows.command.prompt>true</param.windows.command.prompt>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <unset>
+      <param.icon />
+      <param.icons />
+      <param.authnamewatermark />
+      <param.email />
+      <param.company />
+      <param.summary />
+      <param.description />
+      <param.screenshot />
+      <param.guid />
+      <param.installpath.string />
+      <param.installpath.combo />
+      <param.logo />
+      <param.install.notes />
+      <param.intermediate />
+      <param.files.only />
+      <param.output />
+      <param.enable.clean.build />
+      <param.user.defined.mcr.options />
+      <param.embed.ctf />
+      <param.server.ctf />
+      <param.server.readme />
+      <param.target.type />
+      <param.support.packages />
+      <param.no.mcr />
+      <param.web.mcr.name />
+      <param.package.mcr.name />
+      <param.no.mcr.name />
+      <param.windows.command.prompt />
+      <param.create.log />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\LR_GUI.m</file>
+    </fileset.main>
+    <fileset.resources>
+      <file>${PROJECT_ROOT}\absDiff.m</file>
+      <file>${PROJECT_ROOT}\boxplot_transformed_data.m</file>
+      <file>${PROJECT_ROOT}\braycurtisd.m</file>
+      <file>${PROJECT_ROOT}\calcBins.m</file>
+      <file>${PROJECT_ROOT}\cannberaDist.m</file>
+      <file>${PROJECT_ROOT}\cell2csv.m</file>
+      <file>${PROJECT_ROOT}\check_features_call.m</file>
+      <file>${PROJECT_ROOT}\checkThings.m</file>
+      <file>${PROJECT_ROOT}\display_performance.m</file>
+      <file>${PROJECT_ROOT}\eval_performance_ofFit.m</file>
+      <file>${PROJECT_ROOT}\evalCLLR.m</file>
+      <file>${PROJECT_ROOT}\evalLR.m</file>
+      <file>${PROJECT_ROOT}\exportPopParams.m</file>
+      <file>${PROJECT_ROOT}\feature_selection_distance_discrimination_per_feature.m</file>
+      <file>${PROJECT_ROOT}\fit_distrib_to_data.m</file>
+      <file>${PROJECT_ROOT}\generateDistsFromPair.m</file>
+      <file>${PROJECT_ROOT}\heatmap_transformed_data.m</file>
+      <file>${PROJECT_ROOT}\jacob_feature_selection.m</file>
+      <file>${PROJECT_ROOT}\labsConvert.m</file>
+      <file>${PROJECT_ROOT}\lineplot_transformed_data.m</file>
+      <file>${PROJECT_ROOT}\martinFeatureSelection1.m</file>
+      <file>${PROJECT_ROOT}\martinFeatureSelection2.m</file>
+      <file>${PROJECT_ROOT}\metric_call.m</file>
+      <file>${PROJECT_ROOT}\parseCase.m</file>
+      <file>${PROJECT_ROOT}\parseData.m</file>
+      <file>${PROJECT_ROOT}\plot_distrib_and_hist.m</file>
+      <file>${PROJECT_ROOT}\plot_distrib_and_hist.p</file>
+      <file>${PROJECT_ROOT}\plotROC.m</file>
+      <file>${PROJECT_ROOT}\plotTippet.m</file>
+      <file>${PROJECT_ROOT}\populateFeatures.m</file>
+      <file>${PROJECT_ROOT}\populateLabels.m</file>
+      <file>${PROJECT_ROOT}\post_params_to_gui.m</file>
+      <file>${PROJECT_ROOT}\pupup_list_features.m</file>
+      <file>${PROJECT_ROOT}\recover_old_workflow.m</file>
+      <file>${PROJECT_ROOT}\saveValidationResults.m</file>
+      <file>${PROJECT_ROOT}\testCasetoPopValidity.m</file>
+      <file>${PROJECT_ROOT}\transform_data_call.m</file>
+      <file>${PROJECT_ROOT}\TreeRegressMethod.m</file>
+      <file>${PROJECT_ROOT}\trim_data_for_kde.m</file>
+    </fileset.resources>
+    <fileset.package />
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}\LR_GUI_v05b\for_testing" name="LR_GUI_v05b.exe" optional="false">C:\Users\martin\repos\LR_GUI\src\LR_GUI_v05b\for_testing\LR_GUI_v05b.exe</file>
+      <file location="${PROJECT_ROOT}\LR_GUI_v05b\for_testing" name="splash.png" optional="false">C:\Users\martin\repos\LR_GUI\src\LR_GUI_v05b\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\LR_GUI_v05b\for_testing" name="readme.txt" optional="true">C:\Users\martin\repos\LR_GUI\src\LR_GUI_v05b\for_testing\readme.txt</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2014b</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>6.1</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
