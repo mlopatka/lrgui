@@ -20,6 +20,7 @@ if ~isempty(labelNames)
 else
     h.cb_labels = [];
     delete(h.bg_labels);
+    
     h.bg_labels = uibuttongroup('visible','on','Title','Labels','units','normalize','pos',pos_l);
     set(h.t(2),'string','no transformation selected','backgroundcolor',[.8,.3,.3]);
     set(h.t(3),'string','no metric selected','backgroundcolor',[.8,.3,.3]);

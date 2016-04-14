@@ -1,4 +1,4 @@
-function [data, labels, labelNames, featureNames] = parseDataScores(path2DataFile)
+function [data, labels] = parseDataScores(path2DataFile)
 
 LAB_STRING = '_lab_'; %hardcode the label header indicator string
 
@@ -37,12 +37,11 @@ switch filetype
         
         formatSpec = '';
         for jk = 1:numel(labelNames)
-            formatSpec = [formatSpec, '%s'];
+            formatSpec = [formatSpec, '%f'];
         end
         for jk = 1:numel(featureNames)
             formatSpec = [formatSpec, '%f'];
         end
-        formatSpec = [formatSpec, '%[^\n\r]'];
         %dynamic columns numbers based on delimeter count.
         
         %% Read columns of data according to format string.

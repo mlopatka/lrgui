@@ -124,6 +124,8 @@ h.p0 = uicontrol('style','pushbutton','TooltipString', p0_tt,'units','normalized
         if ~checkThings
             error('It is possible that you are using an illegal copy of this application. Limited time or site license expired. If you feel you have recieved this message in error contact <m.lopatka@uva.nl> or <j.c.dezoete@uva.nl>');
         else
+            set([h.p1,h.p2,h.p3,h.p6,h.p7,h.p8,h.p9,h.p10,h.p11,h.p13,h.p15,...
+                h.popup1,h.popup2,h.e1,h.rb_feature_selection_method(1:4),h.cb_data_overview(1:3)],'enable','on')
             set(h.t(21),'string','no data/scores loaded','backgroundcolor',[.8,.3,.3])
             pos_l = get(h.bg_labels,'pos'); %we use the position of the buttongroups to make sure everything stays in the same place
             pos_f = get(h.bg_features,'pos');
@@ -272,7 +274,8 @@ h.p5 = uicontrol('style','pushbutton','units','normalized',...
         if ~checkThings
             error('It is possible that you are using an illegal copy of this application. Limited time or site license expired. If you feel you have recieved this message in error contact <m.lopatka@uva.nl> or <j.c.dezoete@uva.nl>');
         else
-            if((strcmp(get(h.t(3),'string'),'distances computed'))&&(strcmp(get(h.t(2),'string'),'transformation complete'))) % check if all steps are completed
+            if or(and(strcmp(get(h.t(3),'string'),'distances computed'),(strcmp(get(h.t(2),'string'),'transformation complete'))),strcmpi(get(h.t(21),'string'),'scores loaded'))
+                % check if all steps are completed
                 sucessFlag = plot_distrib_and_hist;
                 
                 if(sucessFlag)
@@ -676,32 +679,34 @@ h.p18 = uicontrol('style','pushbutton','units','normalized','pos',[x1+0.065,0.97
             if (fileName(1) == 0) && (path2File(1) == 0)
                 disp('File loading operation canceled.');
             else
-                [feature_data, labels, labelNames, featureNames] = parseDataScores([path2File,fileName]);
-                loc = labsConvert(labels);
-                [s_features,new_order] = sort(featureNames);
-                feature_data=feature_data(:,new_order);
+                set([h.p1,h.p2,h.p3,h.p6,h.p7,h.p8,h.p9,h.p10,h.p11,h.p13,h.p15,...
+                h.popup1,h.popup2,h.e1,h.rb_feature_selection_method(1:4),h.cb_data_overview(1:3)],'enable','off')
+            %set([h.bg_feature_selection,h.bg_data_overview h.t(1:3)],'visible','off')
+                set(h.t(10:18),'string','...');
+                set(h.t(20),'string','final model information');
+                set(h.t(21),'string','scores loaded','backgroundcolor',[.7,.9,.7])
+                set([h.cb_plots(:);h.rb_samedistribution(:);h.rb_diffdistribution(:);h.rb_feature_selection_method(:)],'fontweight','n','backgroundcolor','default');
+                cla(h.ax1)
+                set(h.t(10),'userData',[]);
+                set(h.t(13),'enable','off','userData',[]);
+                set(h.t(16),'enable','off','userData',[]);
+            
+                [score_data, labels_s] = parseDataScores([path2File,fileName]);
+                
+                distance_same = score_data(labels_s == 0);
+                distance_diff = score_data(labels_s == 1);
+                cla(h.ax1);
+                set([h.rb_diffdistribution(:);h.rb_samedistribution(:);h.cb_plots(:)],'backgroundcolor','default','fontweight','n');
+                %set(h.cb_labels(labChecks==1),'backgroundcolor',[.7,.9,.7],'fontweight','b');
+                %`set(h.t(3),'backgroundcolor',[.7,.9,.7],'string',message);
+                %loc = labsConvert(labels);
+                %[s_features,new_order] = sort(featureNames);
+                %feature_data=feature_data(:,new_order);
                 %         numb_of_features = length(feature_data);
-                populateLabels({},pos_l); %clear any old labels and features in place first
-                populateFeatures({},pos_f);
-                p7_call %clears the workflow
-                populateLabels(labelNames,pos_l);
-                populateFeatures(s_features,pos_f);
             end    
             
             % set everything to default colors and values, make
-            % unnecessary stuff invisible
-
-            set([h.p0,h.p1,h.p2,h.p3,h.p6,h.p7,h.p8,h.p9,h.p10,h.p11,h.p13,h.p15,...
-                h.popup1,h.popup2,h.e1,h.rb_feature_selection_method(1:4),h.cb_data_overview(1:3)],'enable','off')
-            %set([h.bg_feature_selection,h.bg_data_overview h.t(1:3)],'visible','off')
-            set(h.t(10:18),'string','...');
-            set(h.t(20),'string','final model information');
-            set(h.t(21),'string','scores loaded','backgroundcolor',[.7,.9,.7])
-            set([h.cb_plots(:);h.rb_samedistribution(:);h.rb_diffdistribution(:);h.rb_feature_selection_method(:)],'fontweight','n','backgroundcolor','default');
-            cla(h.ax1)
-            set(h.t(10),'userData',[]);
-            set(h.t(13),'enable','off','userData',[]);
-            set(h.t(16),'enable','off','userData',[]);
+           
         end
     end
 end
