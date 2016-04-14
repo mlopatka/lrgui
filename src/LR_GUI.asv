@@ -45,6 +45,12 @@ h.cb_summary_figures(3) = uicontrol('style','checkbox','string','tippett plot ' 
 feature_selection_method_names = ['Magical Mystery Tour            ';'PCA determined features         ';'Random Forest                   ';'Individual discrimination method'];
 h.dropdown_feature_selection = uicontrol('style','popupmenu', 'string', feature_selection_method_names, ...
     'units','normalized','pos',[x2+0.005 0.255 x3-(x2+0.005) 0.03],'HandleVisibility','on');
+h.bg_feature_selection =  uibuttongroup('visible','off','Title','Feature selection method','units','normalize','pos',[x2+0.005 0.16 x3-(x2+0.005) 0.17]);
+% create three radiobuttons for selection of the method for feature selection
+h.rb_feature_selection_method(1) = uicontrol('style','radiobutton','string','Magical Mystery Tour'            ,'units','normalized','pos',[0   0.75  0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',1);
+h.rb_feature_selection_method(2) = uicontrol('style','radiobutton','string','PCA determined features'         ,'units','normalized','pos',[0   0.50  0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',0);
+h.rb_feature_selection_method(3) = uicontrol('style','radiobutton','string','Random Forest'                   ,'units','normalized','pos',[0   0.25  0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',0, 'enable', 'off');
+h.rb_feature_selection_method(4) = uicontrol('style','radiobutton','string','Individual discrimination method','units','normalized','pos',[0   0     0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',0);
 
 % determine distribution same source
 h.bg_same_distribution = uibuttongroup('visible','on','Title','same source distribution','units','normalized','pos',[x3+0.02,0.325,(0.99-x3-0.02-0.01)/2-0.06,0.06]);
@@ -124,13 +130,8 @@ h.p0 = uicontrol('style','pushbutton','TooltipString', p0_tt,'units','normalized
         if ~checkThings
             error('It is possible that you are using an illegal copy of this application. Limited time or site license expired. If you feel you have recieved this message in error contact <m.lopatka@uva.nl> or <j.c.dezoete@uva.nl>');
         else
-            set(h.rb_samedistribution([1:5]),'enable','on')
-            set(h.rb_samedistribution(4),'value',1)
-            set(h.rb_diffdistribution([1:5]),'enable','on')
-            set(h.rb_diffdistribution(4),'value',1)
-            
             set([h.p1,h.p2,h.p3,h.p6,h.p7,h.p8,h.p9,h.p10,h.p11,h.p13,h.p15,...
-                h.popup1,h.popup2,h.e1,h.dropdown_feature_selection,h.cb_data_overview(1:3)],'enable','on')
+                h.popup1,h.popup2,h.e1,h.rb_feature_selection_method(1:4),h.cb_data_overview(1:3)],'enable','on')
             set(h.p18,'enable','off')
             set(h.t(21),'string','no data/scores loaded','backgroundcolor',[.8,.3,.3])
             pos_l = get(h.bg_labels,'pos'); %we use the position of the buttongroups to make sure everything stays in the same place
@@ -162,7 +163,7 @@ h.p0 = uicontrol('style','pushbutton','TooltipString', p0_tt,'units','normalized
                 set(h.t(10:18),'string','...');
                 set(h.t(20),'string','final model information');
                 set(h.t(21),'string','data loaded','backgroundcolor',[.7,.9,.7])
-                set([h.cb_plots(:);h.rb_samedistribution(:);h.rb_diffdistribution(:)],'fontweight','n','backgroundcolor','default');
+                set([h.cb_plots(:);h.rb_samedistribution(:);h.rb_diffdistribution(:);h.rb_feature_selection_method(:)],'fontweight','n','backgroundcolor','default');
                 cla(h.ax1)
                 set(h.t(10),'userData',[]);
                 set(h.t(13),'enable','off','userData',[]);
@@ -378,8 +379,13 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
     'fontweight','b', 'TooltipString', p11_tt,'callback',@p11_call,'Interruptible','on');
     function p11_call(varargin)
         if(strcmp(get(h.t(3),'string'),'distances computed'))
-            checked = get(h.dropdown_feature_selection, 'value');
-            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.p18,h.cb_features,h.cb_labels,h.rb_samedistribution,h.rb_diffdistribution,h.cb_plots,h.popup1,h.popup2,h.dropdown_feature_selection],'enable','off');
+            %vals = get(h.rb_feature_selection_method,'Value');
+            %checked = find([vals{:}]);
+            %set(h.rb_feature_selection_method(:),'backgroundcolor','default','fontweight','n')
+            
+            get(h.popup1, 'Value')
+            
+            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.p18,h.cb_features,h.cb_labels,h.rb_samedistribution,h.rb_diffdistribution,h.cb_plots,h.popup1,h.popup2],'enable','off');
             if(checked==1) %jacobs magical mystery tour
                 if(~isempty(str2num(get(h.t(10),'string')))&&strcmp(get(h.t(3),'string'),'distances computed'))
                     if(strcmp(get(h.p11,'string'),'Execute'))
@@ -408,6 +414,7 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
                         else
                             post_params_to_gui(h, parameters_same, parameters_diff, size(distance_diff,2), size(distance_same,2), size(feature_data,1), loc(find((get(h.cb_labels,'value'))))); %display the parameter
                         end
+                        set(h.rb_feature_selection_method(1),'backgroundcolor',[.7,.9,.7],'fontweight','b')
                         set(h.p11,'string','Execute');
                     else
                         set(h.p11,'string','Execute');
@@ -418,6 +425,7 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
                     set(h.p11,'string','Cancel');
                     % pca based feature selection
                     martinFeatureSelection1(feature_data,loc)
+                    set(h.rb_feature_selection_method(2),'backgroundcolor',[.7,.9,.7],'fontweight','b')
                     p1_call; p2_call; p3_call; p5_call;
                     plot_distrib_and_hist;
                     %[confusion_matrix, CLLR] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, 1);
@@ -436,6 +444,7 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
                     set(h.p11,'string','Cancel');
                     % random forest feature selection
                     martinFeatureSelection2(feature_data,loc);
+                    set(h.rb_feature_selection_method(3),'backgroundcolor',[.7,.9,.7],'fontweight','b')
                     p1_call; p2_call; p3_call; p5_call;
                     plot_distrib_and_hist;
                     if isa(get(h.cb_labels,'value'), 'cell')
@@ -472,6 +481,7 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
                     if(strcmp(get(h.t(1),'string'),'features selected')&&strcmp(get(h.t(2),'string'),'transformation complete')&&(sum(cell2mat(temp_lab_cell))>0))
                         feature_selection_distance_discrimination_per_feature(h,loc,labChecks, transformed_data,75);
                         [checked_data] = check_features_call(h.cb_features,h.t,feature_data);
+                        set(h.rb_feature_selection_method(4),'backgroundcolor',[.7,.9,.7],'fontweight','b');
                         %p5_call;
                         plot_distrib_and_hist;
                         %[confusion_matrix, CLLR] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, 1);
@@ -492,7 +502,7 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
                 end
             end
             % Again, we allow the user to select all the possible options
-            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.cb_features,h.cb_labels,h.cb_plots,h.popup1,h.popup2,h.dropdown_feature_selection],'enable','on');
+            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.cb_features,h.cb_labels,h.cb_plots,h.popup1,h.popup2],'enable','on');
         end
     end
 
@@ -675,17 +685,15 @@ h.e1 = uicontrol('style','text','units','normalized',...
     'pos',[x2+0.005,0.565,x3-(x2+0.005),0.09],'string','data','fontsize',10,'fontweight','b');
 
 %% manual selection of KDE bandwith same source
-e2_tt = 'Manually set a kernel bandwidth for the kernel density estimation, larger bandwidth vlaues will lead to smoother density estimates'; 
-h.e2 = uicontrol('style','edit','TooltipString', e2_tt,'units','normalized',...
+h.e2 = uicontrol('style','edit','units','normalized',...
     'pos',[x3+0.02 + (0.99-x3-0.02-0.01)/2-0.04 + 0.005 ,0.325,0.035,0.035],'string','0','fontsize',9);
 
 %% manual selection of KDE bandwith different source distribution
-h.e3 = uicontrol('style','edit','TooltipString', e2_tt,'units','normalized',...
+h.e3 = uicontrol('style','edit','units','normalized',...
     'pos',[x3+0.02+0.02+2*(0.99-x3-0.02-0.03)/4 + + (0.99-x3-0.02-0.01)/2-0.04 + 0.005,0.325,0.035,0.035],'string','0','fontsize',9);
 
 %% load scores button on top of the screen
-p18_tt = 'Load a CSV containing a set of precalculated scores from pairwise comparison of same-source and different-source labels';
-h.p18 = uicontrol('style','pushbutton','TooltipString', p18_tt,'units','normalized','pos',[x1+0.065,0.97,0.06,0.025],'string','Load Scores',...
+h.p18 = uicontrol('style','pushbutton','units','normalized','pos',[x1+0.065,0.97,0.06,0.025],'string','Load Scores',...
     'fontweight','b','callback',@p18_call);
     function p18_call(varargin)
         if ~checkThings
@@ -699,12 +707,12 @@ h.p18 = uicontrol('style','pushbutton','TooltipString', p18_tt,'units','normaliz
                 disp('File loading operation canceled.');
             else
                 set([h.p1,h.p2,h.p3,h.p6,h.p7,h.p8,h.p9,h.p10,h.p11,h.p13,h.p15,...
-                h.popup1,h.popup2,h.e1,h.cb_data_overview(1:3),h.dropdown_feature_selection],'enable','off')
+                h.popup1,h.popup2,h.e1,h.rb_feature_selection_method(1:4),h.cb_data_overview(1:3)],'enable','off')
             %set([h.bg_feature_selection,h.bg_data_overview h.t(1:3)],'visible','off')
                 set(h.t(10:18),'string','...');
                 set(h.t(20),'string','final model information');
                 set(h.t(21),'string','scores loaded','backgroundcolor',[.7,.9,.7])
-                set([h.cb_plots(:);h.rb_samedistribution(:);h.rb_diffdistribution(:)],'fontweight','n','backgroundcolor','default');
+                set([h.cb_plots(:);h.rb_samedistribution(:);h.rb_diffdistribution(:);h.rb_feature_selection_method(:)],'fontweight','n','backgroundcolor','default');
                 cla(h.ax1)
                 set(h.t(10),'userData',[]);
                 set(h.t(13),'enable','off','userData',[]);
