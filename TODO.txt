@@ -1,10 +1,11 @@
 ROADMAP EAFS version:
 1.  documentation
-2.  tooltips
+2.  tooltips # in progress
 3.  exportPopParams, plot_distrib_and_hist, populate_Features, populate_Labels, post_params_to_gui all have global variables set in the beginning of the functions it is better to pass them in from LR_GUI
 4.  Remove clear figure button
 5.  internal cross validation for feature selection
 6.  waitbars for plots and feature selection methods
+6b. mystery tour does CLLR
 
 7. smarter input of data
 8. new kde function (in c++)
