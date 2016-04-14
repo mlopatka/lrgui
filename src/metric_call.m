@@ -67,13 +67,13 @@ if(strcmp(message,'distances computed'))
     exitFlag = true;
     
     % we set the distributions that will not work to `invisible'
-    if(sum(distance_same==0)>0)
+    if(sum(distance_same<=0)>0)
         set(h_rb_samedistribution([2:3,5]),'enable','off')
         if(sum(cell2mat(get(h_rb_samedistribution([2:3,5]),'value')))>0)
             set(h_rb_samedistribution(1),'value',1)
         end
     end
-    if(sum(distance_diff==0)>0)
+    if(sum(distance_diff<=0)>0)
         set(h_rb_diffdistribution([2:3,5]),'enable','off')
         if(sum(cell2mat(get(h_rb_diffdistribution([2:3,5]),'value')))>0)
             set(h_rb_diffdistribution(1),'value',1)
