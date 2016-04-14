@@ -124,6 +124,11 @@ h.p0 = uicontrol('style','pushbutton','TooltipString', p0_tt,'units','normalized
         if ~checkThings
             error('It is possible that you are using an illegal copy of this application. Limited time or site license expired. If you feel you have recieved this message in error contact <m.lopatka@uva.nl> or <j.c.dezoete@uva.nl>');
         else
+            set(h.rb_samedistribution([1:5]),'enable','on')
+            set(h.rb_samedistribution(4),'value',1)
+            set(h.rb_diffdistribution([1:5]),'enable','on')
+            set(h.rb_diffdistribution(4),'value',1)
+            
             set([h.p1,h.p2,h.p3,h.p6,h.p7,h.p8,h.p9,h.p10,h.p11,h.p13,h.p15,...
                 h.popup1,h.popup2,h.e1,h.dropdown_feature_selection,h.cb_data_overview(1:3)],'enable','on')
             set(h.p18,'enable','off')
