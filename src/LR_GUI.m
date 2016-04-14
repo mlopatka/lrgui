@@ -466,7 +466,11 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
                     
                     temp_lab_cell = get(h.cb_labels,'value');
                     if(~iscell(temp_lab_cell))
-                        temp_lab_cell = mat2cell(temp_lab_cell);
+                        if numel(temp_lab_cell)>1
+                            temp_lab_cell = mat2cell(temp_lab_cell);
+                        else
+                            temp_lab_cell = {temp_lab_cell};
+                        end
                     end
                     
                     if(strcmp(get(h.t(1),'string'),'features selected')&&strcmp(get(h.t(2),'string'),'transformation complete')&&(sum(cell2mat(temp_lab_cell))>0))
