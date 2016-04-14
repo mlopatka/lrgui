@@ -53,7 +53,7 @@ end
 
 %% set all parameters
 nbins_same = ceil((max(distance_same)-min(distance_same))/(2*diff(prctile(distance_same, [25; 75]))*length(distance_same)^(-1/3)));
-b_centers_same = linspace(0, max(distance_same), nbins_same);
+b_centers_same = linspace(min(min(distance_diff),min(distance_same)), max(distance_same), nbins_same);
 % determine the best number of bins
 if(~isinf(nbins_same))
     [f_s_1,x1_same] = hist(distance_same, nbins_same);
@@ -64,7 +64,7 @@ else
 end
 
 nbins_diff = ceil((max(distance_diff)-min(distance_diff))/(2*diff(prctile(distance_diff, [25; 75]))*length(distance_diff)^(-1/3)));
-b_centers_diff = linspace(0, max(distance_diff), nbins_diff);
+b_centers_diff = linspace(min(min(distance_diff),min(distance_same)), max(distance_diff), nbins_diff);
 if(~isinf(nbins_diff))
     [f_d_1,x1_diff] = hist(distance_diff, nbins_diff);
     b_t_diff = b_centers_diff;

@@ -513,7 +513,11 @@ h.p12 = uicontrol('style','pushbutton','units','normalized',...
             vals = get(h.rb_diffdistribution,'Value'); checked = [vals{:}];
             distribution_diff = get(h.rb_diffdistribution(logical(checked)),'String');
             wrkflw = get(h.e1,'String');
-            temp_labs_var = get(h.cb_labels, 'Value');
+            if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                temp_labs_var = get(h.cb_labels, 'Value');
+            else
+                temp_labs_var = 'source';
+            end
             if ~isa(temp_labs_var, 'cell')
                 temp_labs_var = {temp_labs_var};
             end
@@ -713,11 +717,11 @@ h.p18 = uicontrol('style','pushbutton','units','normalized','pos',[x1+0.065,0.97
                 distance_diff = score_data(labels_s == 1)';
                 % we set the distributions that will not work to `invisible'
                 if(sum(distance_same<=0)>0)
-                    set(h.rb_samedistribution([1:3]),'enable','off')
+                    set(h.rb_samedistribution([1:3,5]),'enable','off')
                     set(h.rb_samedistribution(4),'value',1)
                 end
                 if(sum(distance_diff<=0)>0)
-                    set(h.rb_diffdistribution([1:3]),'enable','off')
+                    set(h.rb_diffdistribution([1:3,5]),'enable','off')
                     set(h.rb_diffdistribution(4),'value',1)
                 end
                 

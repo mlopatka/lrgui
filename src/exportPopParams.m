@@ -54,38 +54,58 @@ switch flag
             fprintf(fileID,['time stamp                                          : ' datestr(now) '\r\n']);
             fprintf(fileID,['workflow                                            : ' wrkflw '\r\n']);
             temp1 = get(h.popup2, 'String');
-            fprintf(fileID,['metric                                              : ' temp1(get(h.popup2, 'Value'),:) '\r\n']);
+            if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                fprintf(fileID,['metric                                              : ' temp1(get(h.popup2, 'Value'),:) '\r\n']);
+            else
+                fprintf(fileID,['metric                                              : user provided scores \r\n']);
+            end
             fprintf(fileID,['same distribution                                   : ' distribution_same '\r\n']);
             fprintf(fileID,['same distribution parameters                        : ' num2str(parameters_same) '\r\n']);
             fprintf(fileID,['diff distribution                                   : ' distribution_diff '\r\n']);
             fprintf(fileID,['diff distribution parameters                        : ' num2str(parameters_diff) '\r\n']);
-            temp2 = get(h.cb_features,'string'); temp2 = [temp2{:}];
-            temp3 = find(cell2mat(get(h.cb_features,'value')));  temp2 = temp2(temp3);
-            fprintf(fileID,['selected features                                   : ' strjoin(temp2,',') '\r\n' ]);
-            if isa(get(h.cb_labels,'string'), 'char')
-                temp4 = {get(h.cb_labels,'string')}; 
-                temp4 = temp4(find((get(h.cb_labels,'value'))));
+            if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                temp2 = get(h.cb_features,'string'); temp2 = [temp2{:}];
             else
-                temp4 = get(h.cb_labels,'string')'; 
-                temp4 = temp4(find(cell2mat(get(h.cb_labels,'value'))));
+                temp2 = 'none';
             end
+            
+            if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                temp3 = find(cell2mat(get(h.cb_features,'value')));  temp2 = temp2(temp3);
+            else
+                temp2 = {'',temp2};
+            end
+            
+            if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                fprintf(fileID,['selected features                                   : ' strjoin(temp2,',') '\r\n' ]);
+                if isa(get(h.cb_labels,'string'), 'char')
+                    temp4 = {get(h.cb_labels,'string')}; 
+                    temp4 = temp4(find((get(h.cb_labels,'value'))));
+                else
+                    temp4 = get(h.cb_labels,'string')'; 
+                    temp4 = temp4(find(cell2mat(get(h.cb_labels,'value'))));
+                end
+            else
+                temp4 = {'Precomputed scores provided by user'; 'No feature information available'};
+            end
+            
             fprintf(fileID,['active labels                                       : ' strjoin(temp4,',') '\r\n' ]);
             fprintf(fileID,['false positive rate                                 : ' get(h.t(10),'string') '\r\n']);
             fprintf(fileID,['false negative rate                                 : ' get(h.t(11),'string') '\r\n']);
             fprintf(fileID,['log likelihood ratio cost                           : ' get(h.t(12),'string') '\r\n']);
-            fprintf(fileID,['number of same source comparisons                   : ' num2str(size(distance_same,2)) '\r\n']);
-            fprintf(fileID,['number of different source comparisons              : ' num2str(size(distance_diff,2)) '\r\n']);
+            fprintf(fileID,['number of same source comparisons                   : ' num2str(numel(distance_same)) '\r\n']);
+            fprintf(fileID,['number of different source comparisons              : ' num2str(numel(distance_diff)) '\r\n']);
             
-            if isa(get(h.cb_labels,'value'), 'double')
-                temp5 = loc(find(cell2mat({get(h.cb_labels,'value')}))); temp5 = cell2mat(temp5);
-            else
-                temp5 = loc(find(cell2mat(get(h.cb_labels,'value')))); temp5 = cell2mat(temp5);
+            if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                if isa(get(h.cb_labels,'value'), 'double')
+                    temp5 = loc(find(cell2mat({get(h.cb_labels,'value')}))); temp5 = cell2mat(temp5);
+                else
+                    temp5 = loc(find(cell2mat(get(h.cb_labels,'value')))); temp5 = cell2mat(temp5);
+                end
+                fprintf(fileID,['number of different batches based on label selection: ' num2str(length(unique(temp5,'rows'))) '\r\n']);
+                [~,~,temp6] = unique(temp5,'rows');
+                fprintf(fileID,['number of samples per batch                         : ' num2str(histc(temp6,unique(temp6,'rows'))') '\r\n']);    
             end
-            
-            fprintf(fileID,['number of different batches based on label selection: ' num2str(length(unique(temp5,'rows'))) '\r\n']);
-            [~,~,temp6] = unique(temp5,'rows');
-            fprintf(fileID,['number of samples per batch                         : ' num2str(histc(temp6,unique(temp6,'rows'))') '\r\n']);
-
+   
             fclose(fileID);
             
             exportLocation = [filePath,fileName];
