@@ -683,6 +683,22 @@ h.p18 = uicontrol('style','pushbutton','units','normalized','pos',[x1+0.065,0.97
             set(h.t(21),'string','no data/scores loaded','backgroundcolor',[.8,.3,.3])
             % the load scores stuff
             
+            [fileName,path2File] = uigetfile({'*.mat;*.xls;*.csv;*.dat;*.txt'},'Please select the data file containing precomputed pairwise scores to use this session');
+            if (fileName(1) == 0) && (path2File(1) == 0)
+                disp('File loading operation canceled.');
+            else
+                [feature_data, labels, labelNames, featureNames] = parseDataScores([path2File,fileName]);
+                loc = labsConvert(labels);
+                [s_features,new_order] = sort(featureNames);
+                feature_data=feature_data(:,new_order);
+                %         numb_of_features = length(feature_data);
+                populateLabels({},pos_l); %clear any old labels and features in place first
+                populateFeatures({},pos_f);
+                p7_call %clears the workflow
+                populateLabels(labelNames,pos_l);
+                populateFeatures(s_features,pos_f);
+            end    
+            
             % set everything to default colors and values, make
             % unnecessary stuff invisible
 
