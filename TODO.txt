@@ -1,6 +1,5 @@
 ROADMAP EAFS version:
 1.  documentation
-2.  tooltips # in progress
 3.  exportPopParams, plot_distrib_and_hist, populate_Features, populate_Labels, post_params_to_gui all have global variables set in the beginning of the functions it is better to pass them in from LR_GUI
 4.  internal cross validation for feature selection
 5.  waitbars for plots and feature selection methods
