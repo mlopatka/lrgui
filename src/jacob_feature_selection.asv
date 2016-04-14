@@ -21,7 +21,7 @@ if(isfield(h,'cb_labels'))
     if sum(labChecks) < 1 % check if labels have been selected
         set(h.t(3),'backgroundcolor',[.8,.3,.3],'string','no labels selected');
     else % if selected, we release the metric!
-        set(h.cb_labels(labChecks==1),'backgroundcolor',[.7,.9,.7],'fontweight','b');
+            set(h.cb_labels(labChecks==1),'backgroundcolor',[.7,.9,.7],'fontweight','b');
     end
 else % there are no labels
     set(h.t(3),'backgroundcolor',[.8,.3,.3],'string','there are no labels');
@@ -69,42 +69,22 @@ while((changes_1==1||changes_0==1)&&runs<max_runs)
                     
                     if((strcmp(distribution_same,'KDE'))||(strcmp(distribution_diff,'KDE')))
                         [distance_same, distance_diff] = trim_data_for_kde(distance_same, distance_diff, h.rb_samedistribution, h.rb_diffdistribution);
-                        
+
                         tot_dat_temp = [distance_same(:);distance_diff(:)];
                         b_centers = calcBins(tot_dat_temp);
                         %need bins that accomodate all data same and diff distances.
                         [~,~] = hist(distance_same, b_centers);
                         [~,~] = hist(distance_diff, b_centers);
                         [~, b_t] = hist(tot_dat_temp, (numel(b_centers)*10));
-                        
-                                                if strcmpi(distribution_same,'kde')
-                            if get(h.cb_kde_samesource, 'Value') == 1
-                                bandwidth_same = str2double(get(h.e2, 'String'));
-                            else
-                                bandwidth_same = double.empty;
-                            end
-                        else
-                            bandwidth_same = [];
-                        end
-                        
-                        if strcmpi(distribution_diff,'kde')
-                            if get(h.cb_kde_diffsource, 'Value') == 1
-                                bandwidth_diff = str2double(get(h.e3, 'String'));
-                            else
-                                bandwidth_diff = double.empty;
-                            end
-                        else
-                            bandwidth_diff = double.empty;
-                        end
-                        
-                        [~, parameters_same] = fit_distrib_to_data(distance_same,b_t,distribution_same,bandwidth_same);
-                        [~, parameters_diff] = fit_distrib_to_data(distance_diff,b_t,distribution_diff,bandwidth_diff);
+
+                        [~, parameters_same] = fit_distrib_to_data(distance_same,b_t,distribution_same,[]);
+                        [~, parameters_diff] = fit_distrib_to_data(distance_diff,b_t,distribution_diff,[]);
                     else
                         [~, parameters_same] = fit_distrib_to_data(distance_same,1000,distribution_same);
                         [~, parameters_diff] = fit_distrib_to_data(distance_diff,1000,distribution_diff);
                     end
                     [confusion_matrix, cllr] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution,1);
-                    
+
                     pfp = confusion_matrix(2,1)/(confusion_matrix(2,1)+confusion_matrix(2,2));
                     pfn = confusion_matrix(1,2)/(confusion_matrix(1,1)+confusion_matrix(1,2));
                     
@@ -121,7 +101,7 @@ while((changes_1==1||changes_0==1)&&runs<max_runs)
                 end
             end
             type = '1';
-            % in this setting we try to increase our performance by using more features.
+        % in this setting we try to increase our performance by using more features.
         case '1'
             %we set the value of changes to 0, if nothing changes, the program stops.
             changes_1 = 0;
@@ -144,42 +124,22 @@ while((changes_1==1||changes_0==1)&&runs<max_runs)
                     %CHECK THE CHOICE OF N = 1000!!
                     if((strcmp(distribution_same,'KDE'))||(strcmp(distribution_diff,'KDE')))
                         [distance_same, distance_diff] = trim_data_for_kde(distance_same, distance_diff, h.rb_samedistribution, h.rb_diffdistribution);
-                        
+
                         tot_dat_temp = [distance_same(:);distance_diff(:)];
                         b_centers = calcBins(tot_dat_temp);
                         %need bins that accomodate all data same and diff distances.
                         [~,~] = hist(distance_same, b_centers);
                         [~,~] = hist(distance_diff, b_centers);
                         [~, b_t] = hist(tot_dat_temp, (numel(b_centers)*10));
-                        
-                        if strcmpi(distribution_same,'kde')
-                            if get(h.cb_kde_samesource, 'Value') == 1
-                                bandwidth_same = str2double(get(h.e2, 'String'));
-                            else
-                                bandwidth_same = double.empty;
-                            end
-                        else
-                            bandwidth_same = [];
-                        end
-                        
-                        if strcmpi(distribution_diff,'kde')
-                            if get(h.cb_kde_diffsource, 'Value') == 1
-                                bandwidth_diff = str2double(get(h.e3, 'String'));
-                            else
-                                bandwidth_diff = double.empty;
-                            end
-                        else
-                            bandwidth_diff = double.empty;
-                        end
-                        
-                        [~, parameters_same] = fit_distrib_to_data(distance_same,b_t,distribution_same,bandwidth_same);
-                        [~, parameters_diff] = fit_distrib_to_data(distance_diff,b_t,distribution_diff,bandwidth_diff);
+
+                        [~, parameters_same] = fit_distrib_to_data(distance_same,b_t,distribution_same,[]);
+                        [~, parameters_diff] = fit_distrib_to_data(distance_diff,b_t,distribution_diff,[]);
                     else
                         [~, parameters_same] = fit_distrib_to_data(distance_same,1000,distribution_same);
                         [~, parameters_diff] = fit_distrib_to_data(distance_diff,1000,distribution_diff);
                     end
                     [confusion_matrix, cllr] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, 1);
-                    
+
                     pfp = confusion_matrix(2,1)/(confusion_matrix(2,1)+confusion_matrix(2,2));
                     pfn = confusion_matrix(1,2)/(confusion_matrix(1,1)+confusion_matrix(1,2));
                     
