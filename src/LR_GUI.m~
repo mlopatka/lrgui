@@ -209,8 +209,8 @@ h.p2 = uicontrol('style','pushbutton','TooltipString', p2_tt, 'units','normalize
     end
 
 %% calculate distances pushbutton
-p3_tt = ['compute pairwise distances between same-label sampels and different-label samples based on selected label level and using distance metric selected from drop down list'];
-h.p3 = uicontrol('style','pushbutton', 'TooltipString', p3_tt,'units','normalized',...
+p3_tt = ['compute pairwise distances between same-label sampels and different'];
+h.p3 = uicontrol('style','pushbutton','units','normalized',...
     'pos',[x2+0.005+(x3-(x2+0.005))/2,0.38,(x3-(x2+0.005))/2,0.04],'string','CALC. DIST.',...
     'fontweight','b','callback',@p3_call);
     function p3_call(varargin)
