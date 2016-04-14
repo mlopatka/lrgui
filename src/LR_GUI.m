@@ -20,40 +20,44 @@ h.bg_features = uibuttongroup('visible','on','Title','Features','units','normali
 h.bg_labels = uibuttongroup('visible','on','Title','Labels','units','normalize','pos',[x2+0.005 0.73 x3-(x2+0.005) 0.24]);
 
 % this is the parent buttongroup for the selection of which things to plot
+plot_bg_tt = 'Select which distributions and histograms should be plotted when using the [Plot] button';
 h.bg_plots = uibuttongroup('visible','on','Title','Plot','units','normalize','pos',[x3+0.02 0.235 (0.99-x3-0.02-0.01)/2 0.09]);
 % create four checkboxes for selection the objects to plot
-h.cb_plots(1) = uicontrol('style','checkbox','string','same source histogram'        ,'units','normalized','pos',[0 0.5   0.5 0.49],'parent',h.bg_plots,'HandleVisibility','off','value',1);
-h.cb_plots(2) = uicontrol('style','checkbox','string','same source distribution'     ,'units','normalized','pos',[0   0   0.5 0.49],'parent',h.bg_plots,'HandleVisibility','off','value',1);
-h.cb_plots(3) = uicontrol('style','checkbox','string','different source histogram'   ,'units','normalized','pos',[0.5 0.5 0.5 0.49],'parent',h.bg_plots,'HandleVisibility','off','value',1);
-h.cb_plots(4) = uicontrol('style','checkbox','string','different source distribution','units','normalized','pos',[0.5 0   0.5 0.49],'parent',h.bg_plots,'HandleVisibility','off','value',1);
+h.cb_plots(1) = uicontrol('style','checkbox','string','same source histogram'        ,'TooltipString', plot_bg_tt,'units','normalized','pos',[0 0.5   0.5 0.49],'parent',h.bg_plots,'HandleVisibility','off','value',1);
+h.cb_plots(2) = uicontrol('style','checkbox','string','same source distribution'     ,'TooltipString', plot_bg_tt,'units','normalized','pos',[0   0   0.5 0.49],'parent',h.bg_plots,'HandleVisibility','off','value',1);
+h.cb_plots(3) = uicontrol('style','checkbox','string','different source histogram'   ,'TooltipString', plot_bg_tt,'units','normalized','pos',[0.5 0.5 0.5 0.49],'parent',h.bg_plots,'HandleVisibility','off','value',1);
+h.cb_plots(4) = uicontrol('style','checkbox','string','different source distribution','TooltipString', plot_bg_tt,'units','normalized','pos',[0.5 0   0.5 0.49],'parent',h.bg_plots,'HandleVisibility','off','value',1);
 
 % here, we can select what plots to make of the transformed data
+data_overview_bg_tt = 'Select which data overview figures are plotted when using the [Plot data overview] button';
 h.bg_data_overview    = uibuttongroup('visible','on','Title','Data overview','units','normalize','pos',[x2+0.005,0.04,x3-(x2+0.005),0.06]);
-h.cb_data_overview(1) = uicontrol('style','checkbox','string','boxplot' ,'units','normalized','pos',[0   0 1/3 1],'parent',h.bg_data_overview,'HandleVisibility','off','value',1);
-h.cb_data_overview(2) = uicontrol('style','checkbox','string','lineplot','units','normalized','pos',[1/3 0 1/3 1],'parent',h.bg_data_overview,'HandleVisibility','off','value',1);
-h.cb_data_overview(3) = uicontrol('style','checkbox','string','heatmap' ,'units','normalized','pos',[2/3 0 1/3 1],'parent',h.bg_data_overview,'HandleVisibility','off','value',1);
+h.cb_data_overview(1) = uicontrol('style','checkbox','string','boxplot' ,'TooltipString', data_overview_bg_tt,'units','normalized','pos',[0   0 1/3 1],'parent',h.bg_data_overview,'HandleVisibility','off','value',1);
+h.cb_data_overview(2) = uicontrol('style','checkbox','string','lineplot','TooltipString', data_overview_bg_tt,'units','normalized','pos',[1/3 0 1/3 1],'parent',h.bg_data_overview,'HandleVisibility','off','value',1);
+h.cb_data_overview(3) = uicontrol('style','checkbox','string','heatmap' ,'TooltipString', data_overview_bg_tt,'units','normalized','pos',[2/3 0 1/3 1],'parent',h.bg_data_overview,'HandleVisibility','off','value',1);
 
 % here, we can select what plots to make of the transformed data
+summary_figures_bg_tt = 'Select which data summary figures are plotted when using the [Plot summary figures] button';
 h.bg_summary_figures    = uibuttongroup('visible','on','Title','Summary figures','units','normalized','pos',[x3+0.02,0.04,(0.99-x3-0.02-0.01)/2,0.06]);
-%h.cb_summary_figures(1) = uicontrol('style','checkbox','string','ece plot     ' ,'units','normalized','pos',[0   0 1/4 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
-h.cb_summary_figures(1) = uicontrol('style','checkbox','string','hist and dist' ,'units','normalized','pos',[0 0 1/3 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
-h.cb_summary_figures(2) = uicontrol('style','checkbox','string','roc curve    ' ,'units','normalized','pos',[1/3 0 1/3 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
-h.cb_summary_figures(3) = uicontrol('style','checkbox','string','tippett plot ' ,'units','normalized','pos',[2/3 0 1/3 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
+h.cb_summary_figures(1) = uicontrol('style','checkbox','string','hist and dist' ,'TooltipString', summary_figures_bg_tt,'units','normalized','pos',[0 0 1/3 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
+h.cb_summary_figures(2) = uicontrol('style','checkbox','string','roc curve    ' ,'TooltipString', summary_figures_bg_tt,'units','normalized','pos',[1/3 0 1/3 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
+h.cb_summary_figures(3) = uicontrol('style','checkbox','string','tippett plot ' ,'TooltipString', summary_figures_bg_tt,'units','normalized','pos',[2/3 0 1/3 1],'parent',h.bg_summary_figures,'HandleVisibility','off','value',1);
 
 
 % this parent radiobuttongroup is for the choice of feature selection method
+dropdown_feature_selection_tt = 'Selects the feature selection method that is used on the workflow by pressing the [Execute] button';
 feature_selection_method_names = ['Magical Mystery Tour            ';'PCA determined features         ';'Random Forest                   ';'Individual discrimination method'];
-h.dropdown_feature_selection = uicontrol('style','popupmenu', 'string', feature_selection_method_names, ...
+h.dropdown_feature_selection = uicontrol('style','popupmenu', 'string', feature_selection_method_names,'TooltipString', dropdown_feature_selection_tt, ...
     'units','normalized','pos',[x2+0.005 0.255 x3-(x2+0.005) 0.03],'HandleVisibility','on');
 
 % determine distribution same source
 h.bg_same_distribution = uibuttongroup('visible','on','Title','same source distribution','units','normalized','pos',[x3+0.02,0.325,(0.99-x3-0.02-0.01)/2-0.06,0.06]);
-% create three radio buttons in the button group
-h.rb_samedistribution(1) = uicontrol('style','radiobutton','string','gamma'    ,'units','normalized','pos',[0.001,0.01,0.20,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
-h.rb_samedistribution(2) = uicontrol('style','radiobutton','string','lognormal','units','normalized','pos',[0.200,0.01,0.25,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
-h.rb_samedistribution(3) = uicontrol('style','radiobutton','string','weibull'  ,'units','normalized','pos',[0.450,0.01,0.20,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
-h.rb_samedistribution(4) = uicontrol('style','radiobutton','string','normal'   ,'units','normalized','pos',[0.650,0.01,0.20,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
-h.rb_samedistribution(5) = uicontrol('style','radiobutton','string','KDE'      ,'units','normalized','pos',[0.850,0.01,0.15,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
+% create five radio buttons in the button group
+same_distribution_bg_tt = 'Select the same source comparison distribution that is estimated from the same source distances.';
+h.rb_samedistribution(1) = uicontrol('style','radiobutton','string','gamma'    ,'TooltipString', same_distribution_bg_tt,'units','normalized','pos',[0.001,0.01,0.20,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
+h.rb_samedistribution(2) = uicontrol('style','radiobutton','string','lognormal','TooltipString', same_distribution_bg_tt,'units','normalized','pos',[0.200,0.01,0.25,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
+h.rb_samedistribution(3) = uicontrol('style','radiobutton','string','weibull'  ,'TooltipString', same_distribution_bg_tt,'units','normalized','pos',[0.450,0.01,0.20,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
+h.rb_samedistribution(4) = uicontrol('style','radiobutton','string','normal'   ,'TooltipString', same_distribution_bg_tt,'units','normalized','pos',[0.650,0.01,0.20,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
+h.rb_samedistribution(5) = uicontrol('style','radiobutton','string','KDE'      ,'TooltipString', same_distribution_bg_tt,'units','normalized','pos',[0.850,0.01,0.15,0.98],'parent',h.bg_same_distribution,'HandleVisibility','off');
 
 %% manual KDE checkbox same source
 h.cb_kde_samesource = uicontrol('style','checkbox','string','' ,'units','normalized','pos',[x3+0.025 + (0.99-x3-0.02-0.01)/2-0.06,0.325,0.011,0.03],'HandleVisibility','off','value',0);
@@ -61,12 +65,13 @@ h.t_kde_set_bandwidth_same_source = uicontrol('style','text','string','set bandw
 
 % determine distribution different source
 h.bg_diff_distribution = uibuttongroup('visible','on','Title','different source distribution','units','normalized','pos',[x4,0.325,(0.99-x3-0.02-0.01)/2 - 0.06,0.06]);
-% create three radio buttons in the button groupS
-h.rb_diffdistribution(1) = uicontrol('style','radiobutton','string','gamma'    ,'units','normalized','pos',[0.001,0.01,0.20,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
-h.rb_diffdistribution(2) = uicontrol('style','radiobutton','string','lognormal','units','normalized','pos',[0.200,0.01,0.25,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
-h.rb_diffdistribution(3) = uicontrol('style','radiobutton','string','weibull'  ,'units','normalized','pos',[0.450,0.01,0.20,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
-h.rb_diffdistribution(4) = uicontrol('style','radiobutton','string','normal'   ,'units','normalized','pos',[0.650,0.01,0.20,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
-h.rb_diffdistribution(5) = uicontrol('style','radiobutton','string','KDE'      ,'units','normalized','pos',[0.850,0.01,0.15,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
+% create five radio buttons in the button groups
+diff_distribution_bg_tt = 'Select the different source comparison distribution that is estimated from the different source distances.';
+h.rb_diffdistribution(1) = uicontrol('style','radiobutton','string','gamma'    ,'TooltipString', diff_distribution_bg_tt,'units','normalized','pos',[0.001,0.01,0.20,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
+h.rb_diffdistribution(2) = uicontrol('style','radiobutton','string','lognormal','TooltipString', diff_distribution_bg_tt,'units','normalized','pos',[0.200,0.01,0.25,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
+h.rb_diffdistribution(3) = uicontrol('style','radiobutton','string','weibull'  ,'TooltipString', diff_distribution_bg_tt,'units','normalized','pos',[0.450,0.01,0.20,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
+h.rb_diffdistribution(4) = uicontrol('style','radiobutton','string','normal'   ,'TooltipString', diff_distribution_bg_tt,'units','normalized','pos',[0.650,0.01,0.20,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
+h.rb_diffdistribution(5) = uicontrol('style','radiobutton','string','KDE'      ,'TooltipString', diff_distribution_bg_tt,'units','normalized','pos',[0.850,0.01,0.15,0.98],'parent',h.bg_diff_distribution,'HandleVisibility','off');
 
 %% manual KDE checkbox same source
 h.cb_kde_diffsource = uicontrol('style','checkbox','string','' ,'units','normalized','pos',                      [x3+0.025+0.02+2*(0.99-x3-0.02-0.03)/4 + (0.99-x3-0.02-0.01)/2-0.06,0.325,0.011,0.03],'HandleVisibility','off','value',0);
@@ -93,10 +98,11 @@ h.t(6)  = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0
 h.t(10) = uicontrol('style','text','units','normalized','pos',      [x3+0.02                         ,0.17,0.0875,0.025],'string','...','fontsize',10,'fontweight','bold');
 h.t(11) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.005        ,0.17,0.0875,0.025],'string','...','fontsize',10,'fontweight','bold');
 h.t(12) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.0875 + 0.01,0.17,0.0875,0.025],'string','...','fontsize',10,'fontweight','bold');
-h.t(13) = uicontrol('style','pushbutton','units','normalized','pos',[x3+0.02                         ,0.14,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic','enable','off','callback',@p17_call);
+previous_workflow_tt = 'reload the workflow corresponding with these summary statistics as the current workflow';
+h.t(13) = uicontrol('style','pushbutton','TooltipString', previous_workflow_tt,'units','normalized','pos',[x3+0.02                         ,0.14,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic','enable','off','callback',@p17_call);
 h.t(14) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.005        ,0.14,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
 h.t(15) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.0875 + 0.01,0.14,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
-h.t(16) = uicontrol('style','pushbutton','units','normalized','pos',[x3+0.02                         ,0.11,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic','enable','off','callback',@p17_call);
+h.t(16) = uicontrol('style','pushbutton','TooltipString', previous_workflow_tt,'units','normalized','pos',[x3+0.02                         ,0.11,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic','enable','off','callback',@p17_call);
 h.t(17) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.005        ,0.11,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
 h.t(18) = uicontrol('style','text','units','normalized','pos',      [x3+0.02 + 0.0875 + 0.0875 + 0.01,0.11,0.0875,0.025],'string','...','fontsize',10,'foregroundcolor',[0.4 0.4 0.4],'fontangle','italic');
 
@@ -538,7 +544,7 @@ h.p12 = uicontrol('style','pushbutton','units','normalized',...
     end
 
 %% data overview plot pushbutton
-p13_tt = 'Plots the figures selected in the checkboxes in separate windoes. These provice an overview of the data.';
+p13_tt = 'Plots the figures selected in the checkboxes in separate windoes. These provide an overview of the data.';
 h.p13 = uicontrol('style','pushbutton','units','normalized','pos',...
     [x2+0.005,0.005,x3-(x2+0.005),0.03], 'TooltipString', p13_tt,'string','Plot data overview',...
     'fontweight','b','callback',@p13_call);
@@ -558,7 +564,7 @@ h.p13 = uicontrol('style','pushbutton','units','normalized','pos',...
 
 %% evaluate validation samples pushbutton
 
-p14_tt = ['do some stuff!!'];
+p14_tt = ['Uses the selected workflow on a set of samples of which it is unknown whether they are same/different source. Generates a .csv file with correspoding distances and LRs'];
 h.p14 = uicontrol('style','pushbutton','TooltipString', p14_tt,'units', 'normalized',...
     'pos',[x4,0.16,(0.99-x3-0.02-0.03)/4,0.035],'string','Eval. Validation Samples',...
     'fontweight','b','fontsize',9, 'callback', @p_14_call);
@@ -606,7 +612,8 @@ h.p14 = uicontrol('style','pushbutton','TooltipString', p14_tt,'units', 'normali
     end
 
 %% popup list with all the features, possible to select within the popup list
-h.p15 = uicontrol('style','pushbutton','units','normalized',...
+p15_tt = ['Opens a pop-up screen in which the user can select the features manually. When the number of features is too large to put them in the feature selection box, features should be selected using this window.'];
+h.p15 = uicontrol('style','pushbutton','TooltipString', p15_tt,'units','normalized',...
     'pos',[x1,0.005,0.125,0.030],'string','FEATURES POP UP LIST',...
     'fontweight','b','callback',@p15_call);
     function p15_call(varargin)
@@ -625,8 +632,8 @@ h.p15 = uicontrol('style','pushbutton','units','normalized',...
     end
 
 %% summary figures plot pushbutton
-%[x3+0.02,0.08,(0.99-x3-0.02-0.01)/2,0.06]
-h.p16 = uicontrol('style','pushbutton','units','normalized','pos',...
+p16_tt = ['Plots the summary figures of which the checkboxes are selected in separate windows.'];
+h.p16 = uicontrol('style','pushbutton','units','normalized','TooltipString', p16_tt,'pos',...
     [x3+0.02,0.005,(0.99-x3-0.02-0.01)/2,0.03],'string','Plot summary figures',...
     'fontweight','b','callback',@p16_call);
     function p16_call(varargin)
@@ -667,11 +674,13 @@ h.p16 = uicontrol('style','pushbutton','units','normalized','pos',...
 %% create popup menus
 %% popup menu for different transformations
 trans_names = ['exp  ';'-mean';'norm ';'log  ';'log10';'sqrt ';'/std '];
-h.popup1 = uicontrol('style','popupmenu', 'string', trans_names, ...
+popup1_tt = 'Selects the data pre-processing tranformation for the raw sample data. Can be added with [add step>]';
+h.popup1 = uicontrol('style','popupmenu', 'string', trans_names,'TooltipString', popup1_tt, ...
     'units','normalized','pos',[x2+0.005,0.28,(x3-(x2+0.01))/2,0.425],'HandleVisibility','on');
 %% pop up for different distance metrics
 metric_names = ['absolute dif';'bray-curtis ';'cannbera    ';'chebychev   ';'cityblock   ';'correlation ';'cosine      ';'euclidean   ';'mahalanobis '; 'minkowski   '];
-h.popup2= uicontrol('style','popupmenu', 'string', metric_names, ...
+popup2_tt = 'Selects the metric that is used on the transformed sample data. Execute with [CALC. DIST.]';
+h.popup2= uicontrol('style','popupmenu', 'string', metric_names,'TooltipString', popup2_tt, ...
     'units','normalized','pos',[x2+0.005,0.38,(x3-(x2+0.01))/2,0.040],'HandleVisibility','on');
 
 %% workflow text edit, this is selectable but can not be manually edited. Only set by the use of the dropdowns.
