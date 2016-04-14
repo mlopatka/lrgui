@@ -513,7 +513,11 @@ h.p12 = uicontrol('style','pushbutton','units','normalized',...
             vals = get(h.rb_diffdistribution,'Value'); checked = [vals{:}];
             distribution_diff = get(h.rb_diffdistribution(logical(checked)),'String');
             wrkflw = get(h.e1,'String');
-            temp_labs_var = get(h.cb_labels, 'Value');
+            if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                temp_labs_var = get(h.cb_labels, 'Value');
+            else
+                temp_labs_var = 'source';
+            end
             if ~isa(temp_labs_var, 'cell')
                 temp_labs_var = {temp_labs_var};
             end
