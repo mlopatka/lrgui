@@ -713,11 +713,11 @@ h.p18 = uicontrol('style','pushbutton','units','normalized','pos',[x1+0.065,0.97
                 distance_diff = score_data(labels_s == 1);
                 % we set the distributions that will not work to `invisible'
                 if(sum(distance_same<=0)>0)
-                    set(h.rb_samedistribution([1:3]),'enable','off')
+                    set(h.rb_samedistribution([1:3,5]),'enable','off')
                     set(h.rb_samedistribution(4),'value',1)
                 end
                 if(sum(distance_diff<=0)>0)
-                    set(h.rb_diffdistribution([1:3]),'enable','off')
+                    set(h.rb_diffdistribution([1:3,5]),'enable','off')
                     set(h.rb_diffdistribution(4),'value',1)
                 end
                 
