@@ -709,8 +709,8 @@ h.p18 = uicontrol('style','pushbutton','units','normalized','pos',[x1+0.065,0.97
             
                 [score_data, labels_s] = parseDataScores([path2File,fileName]);
                 
-                distance_same = score_data(labels_s == 0);
-                distance_diff = score_data(labels_s == 1);
+                distance_same = score_data(labels_s == 0)';
+                distance_diff = score_data(labels_s == 1)';
                 % we set the distributions that will not work to `invisible'
                 if(sum(distance_same<=0)>0)
                     set(h.rb_samedistribution([1:3]),'enable','off')
