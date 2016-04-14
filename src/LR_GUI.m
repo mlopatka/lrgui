@@ -44,9 +44,9 @@ h.cb_summary_figures(3) = uicontrol('style','checkbox','string','tippett plot ' 
 % this parent radiobuttongroup is for the choice of feature selection method
 h.bg_feature_selection =  uibuttongroup('visible','on','Title','Feature selection method','units','normalize','pos',[x2+0.005 0.16 x3-(x2+0.005) 0.17]);
 % create three radiobuttons for selection of the method for feature selection
-h.rb_feature_selection_method(1) = uicontrol('style','radiobutton','string','Jacobs Magical Mystery Tour'     ,'units','normalized','pos',[0   0.75  0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',1);
+h.rb_feature_selection_method(1) = uicontrol('style','radiobutton','string','Magical Mystery Tour'            ,'units','normalized','pos',[0   0.75  0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',1);
 h.rb_feature_selection_method(2) = uicontrol('style','radiobutton','string','PCA determined features'         ,'units','normalized','pos',[0   0.50  0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',0);
-h.rb_feature_selection_method(3) = uicontrol('style','radiobutton','string','Random Forest Feature Selection ','units','normalized','pos',[0   0.25  0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',0, 'enable', 'off');
+h.rb_feature_selection_method(3) = uicontrol('style','radiobutton','string','Random Forest'                   ,'units','normalized','pos',[0   0.25  0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',0, 'enable', 'off');
 h.rb_feature_selection_method(4) = uicontrol('style','radiobutton','string','Individual discrimination method','units','normalized','pos',[0   0     0.99 0.25],'parent',h.bg_feature_selection,'HandleVisibility','off','value',0);
 
 % determine distribution same source
@@ -108,7 +108,7 @@ h.t(19) = uicontrol('style','text','units','normalized','pos',[x4,0.005,0.27,0.1
 % textbox with final model information
 h.t(20) = uicontrol('style','edit','units','normalized','pos',[x3+0.02+0.03+3*(0.99-x3-0.02-0.03)/4,0.16,(0.99-x3-0.02-0.03)/4,0.155],'string','final model information','fontsize',9,'max',2,'HorizontalAlignment','left');
 % textbox with whether the data is loaded
-h.t(21) = uicontrol('style','text','units','normalized','pos',[x1+0.13,0.97,x2-x1-0.13,0.025],'string','no data loaded','backgroundcolor',[.8,.3,.3],'fontweight','b');
+h.t(21) = uicontrol('style','text','units','normalized','pos',[x1+0.13,0.97,x2-x1-0.13,0.025],'string','no data/scores loaded','backgroundcolor',[.8,.3,.3],'fontweight','b');
 
 
 %% special hold of the output of a population model
@@ -116,7 +116,7 @@ h.currentPopModelLoc = 0;
 
 %% create pushbottons p0 -> p14
 %% creat load data set pushbutton
-p0_tt = ['Load a CSV file containing your data set formatted as a matrix with one leading row (containing all label names formatted as _labelName_ and all feature names)']; 
+p0_tt = ['Load a CSV file containing your data set formatted as a matrix with one leading row (containing all label names formatted as _labelName_ and all feature names)'];
 h.p0 = uicontrol('style','pushbutton','TooltipString', p0_tt,'units','normalized',...
     'pos',[x1,0.97,0.06,0.025],'string','Load Dataset',...
     'fontweight','b','callback',@p0_call);
@@ -124,7 +124,7 @@ h.p0 = uicontrol('style','pushbutton','TooltipString', p0_tt,'units','normalized
         if ~checkThings
             error('It is possible that you are using an illegal copy of this application. Limited time or site license expired. If you feel you have recieved this message in error contact <m.lopatka@uva.nl> or <j.c.dezoete@uva.nl>');
         else
-            set(h.t(21),'string','no data loaded','backgroundcolor',[.8,.3,.3])
+            set(h.t(21),'string','no data/scores loaded','backgroundcolor',[.8,.3,.3])
             pos_l = get(h.bg_labels,'pos'); %we use the position of the buttongroups to make sure everything stays in the same place
             pos_f = get(h.bg_features,'pos');
             [fileName,path2File] = uigetfile({'*.mat;*.xls;*.csv;*.dat;*.txt'},'Please select the data file to use this session');
@@ -533,8 +533,8 @@ h.p13 = uicontrol('style','pushbutton','units','normalized','pos',...
     end
 
 %% evaluate validation samples pushbutton
- 
-p14_tt = ['do some stuff!!'];      
+
+p14_tt = ['do some stuff!!'];
 h.p14 = uicontrol('style','pushbutton','TooltipString', p14_tt,'units', 'normalized',...
     'pos',[x4,0.16,(0.99-x3-0.02-0.03)/4,0.035],'string','Eval. Validation Samples',...
     'fontweight','b','fontsize',9, 'callback', @p_14_call);
@@ -606,9 +606,9 @@ h.p16 = uicontrol('style','pushbutton','units','normalized','pos',...
     [x3+0.02,0.005,(0.99-x3-0.02-0.01)/2,0.03],'string','Plot summary figures',...
     'fontweight','b','callback',@p16_call);
     function p16_call(varargin)
-%         if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(1),'value')==1)
-%             %ece plot
-%         end
+        %         if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(1),'value')==1)
+        %             %ece plot
+        %         end
         
         if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(1),'value')==1)
             % hist and dist
@@ -619,13 +619,13 @@ h.p16 = uicontrol('style','pushbutton','units','normalized','pos',...
         if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(2),'value')==1)
             % roc curve
             [labels, LRs] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, false);
-            plotROC(LRs, labels); 
+            plotROC(LRs, labels);
         end
         
         if(~(strcmp((get(h.t(10),'string')),'...'))&&get(h.cb_summary_figures(3),'value')==1)
             % tippett plot
             [labels, LRs] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, false);
-            plotTippet(LRs(labels==1),LRs(labels==0)); 
+            plotTippet(LRs(labels==1),LRs(labels==0));
         end
     end
 
@@ -665,4 +665,27 @@ h.e3 = uicontrol('style','edit','units','normalized',...
 %% load scores button on top of the screen
 h.p18 = uicontrol('style','pushbutton','units','normalized','pos',[x1+0.065,0.97,0.06,0.025],'string','Load Scores',...
     'fontweight','b','callback',@p18_call);
+    function p18_call(varargin)
+        if ~checkThings
+            error('It is possible that you are using an illegal copy of this application. Limited time or site license expired. If you feel you have recieved this message in error contact <m.lopatka@uva.nl> or <j.c.dezoete@uva.nl>');
+        else
+            set(h.t(21),'string','no data/scores loaded','backgroundcolor',[.8,.3,.3])
+            % the load scores stuff
+            
+            % set everything to default colors and values, make
+            % unnecessary stuff invisible
+
+            set([h.p0,h.p1,h.p2,h.p3,h.p6,h.p7,h.p8,h.p9,h.p10,h.p11,h.p13,h.p15,...
+                h.popup1,h.popup2,h.e1,h.rb_feature_selection_method(1:4),h.cb_data_overview(1:3)],'enable','off')
+            %set([h.bg_feature_selection,h.bg_data_overview h.t(1:3)],'visible','off')
+            set(h.t(10:18),'string','...');
+            set(h.t(20),'string','final model information');
+            set(h.t(21),'string','scores loaded','backgroundcolor',[.7,.9,.7])
+            set([h.cb_plots(:);h.rb_samedistribution(:);h.rb_diffdistribution(:);h.rb_feature_selection_method(:)],'fontweight','n','backgroundcolor','default');
+            cla(h.ax1)
+            set(h.t(10),'userData',[]);
+            set(h.t(13),'enable','off','userData',[]);
+            set(h.t(16),'enable','off','userData',[]);
+        end
+    end
 end
