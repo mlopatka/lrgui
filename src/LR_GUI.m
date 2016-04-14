@@ -126,12 +126,14 @@ h.p0 = uicontrol('style','pushbutton','TooltipString', p0_tt,'units','normalized
         else
             set([h.p1,h.p2,h.p3,h.p6,h.p7,h.p8,h.p9,h.p10,h.p11,h.p13,h.p15,...
                 h.popup1,h.popup2,h.e1,h.rb_feature_selection_method(1:4),h.cb_data_overview(1:3)],'enable','on')
+            set(h.p18,'enable','off')
             set(h.t(21),'string','no data/scores loaded','backgroundcolor',[.8,.3,.3])
             pos_l = get(h.bg_labels,'pos'); %we use the position of the buttongroups to make sure everything stays in the same place
             pos_f = get(h.bg_features,'pos');
             [fileName,path2File] = uigetfile({'*.mat;*.xls;*.csv;*.dat;*.txt'},'Please select the data file to use this session');
             if (fileName(1) == 0) && (path2File(1) == 0)
                 disp('File loading operation canceled.');
+                set(h.p18,'enable','on')
             else
                 [feature_data, labels, labelNames, featureNames] = parseData([path2File,fileName]);
                 loc = labsConvert(labels);
@@ -262,9 +264,7 @@ h.p4 = uicontrol('style','pushbutton','units','normalized',...
     'pos',[x4,0.24,(0.99-x3-0.02-0.03)/4,0.035],'string','Exp. Scores',...
     'fontweight','b','fontsize',9, 'TooltipString', p4_tt,'callback',@p4_call);
     function p4_call(varargin)
-        cla(h.ax1)
-        %set(h.t(10:12),'string','...');
-        set([h.rb_diffdistribution(:);h.rb_samedistribution(:);h.cb_plots(:)],'backgroundcolor','default','fontweight','n');
+        export_scores_call(distance_same,distance_diff);
     end
 
 %% plot pushbutton
