@@ -54,7 +54,11 @@ function post_params_to_gui(h, parameters_same, parameters_diff, num_distance_di
     line{17} = ' ';
     line{18} = ['based on ' num2str(num_samples) ' samples'];
     line{19} = ' ';
-    location_information = cell2mat(location_information);
+    if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+        location_information = cell2mat(location_information);
+    else
+        location_information = 0;
+    end
     
     line{20} = ['number of different batches based on label selection: ' num2str(length(unique(location_information,'rows')))];
     %labels_active = cell2mat(get(h.c_labels, 'Value'));

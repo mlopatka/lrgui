@@ -63,7 +63,7 @@ if(sum(isinf([pdf_DataSame_ModelSame,pdf_DataSame_ModelDiff,pdf_DataDiff_ModelSa
 end
 
 lr_vals = [pdf_DataSame_ModelSame./pdf_DataSame_ModelDiff,pdf_DataDiff_ModelSame./pdf_DataDiff_ModelDiff];
-if((sum(isnan(lr_vals))>0)||(sum(isinf(lr_vals))>0)) % what to do when there are NaN values in the lr_vals
+if or(sum(isnan(lr_vals))>0,sum(isinf(lr_vals))>0) % what to do when there are NaN values in the lr_vals
     if(sum(pdf_DataSame_ModelDiff==0)>0)
         if(sum((pdf_DataSame_ModelSame==0)&(pdf_DataSame_ModelDiff==0))>0)
             lr_vals((pdf_DataSame_ModelSame==0)&(pdf_DataSame_ModelDiff==0)) = 1;

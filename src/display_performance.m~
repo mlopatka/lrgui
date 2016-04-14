@@ -14,13 +14,10 @@ if(sum([get(h.t(13),'value'),get(h.t(16),'value')])==0)
     set(h_t(10),'string',num2str(confusion_matrix(2,1)/(confusion_matrix(2,1)+confusion_matrix(2,2))))% false positive
     set(h_t(11),'string',num2str(confusion_matrix(1,2)/(confusion_matrix(1,1)+confusion_matrix(1,2))))% false negative
     set(h_t(12),'string',num2str(cllr))% is passed in in cllr
+
+    set(h.t(10),'userData',{get(h.cb_features,'value'),get(h.cb_labels,'value'),{get(h.e1,'string')},{get(h.popup2,'value')},get(h.rb_samedistribution,'Value'),get(h.rb_diffdistribution,'Value')})
     
-    if ~strcmpi(get(h.t(21),'string'),'scores loaded')
-        set(h.t(10),'userData',{get(h.cb_features,'value'),get(h.cb_labels,'value'),{get(h.e1,'string')},{get(h.popup2,'value')},get(h.rb_samedistribution,'Value'),get(h.rb_diffdistribution,'Value')})
-    else
-        set(h.t(10),'userData', {'User provided scores utilized',{get(h.popup2,'value')},get(h.rb_samedistribution,'Value'),get(h.rb_diffdistribution,'Value')})
-    end
-        
+    
     if(~isempty(get(h.t(13),'userData')))
         set(h.t(13),'enable','on')
     end

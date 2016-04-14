@@ -1,7 +1,7 @@
 function LR_GUI
 global transformed_data feature_data distance_same distance_diff loc parameters_same parameters_diff h checked_data
 
-warning 'off'
+%warning 'off'
 
 %% we set the variables that determine the layout, this way we can more easily change the layout
 x1 = 0.005;  %left  boundary left part
@@ -116,7 +116,7 @@ h.currentPopModelLoc = 0;
 
 %% create pushbottons p0 -> p14
 %% creat load data set pushbutton
-p0_tt = ['Load a CSV file containing your data set formatted as a matrix with one leading row (containing all label names formatted as _labelName_ and all feature names)'];
+p0_tt = 'Loads a CSV file containing your data set formatted as a matrix with one leading row (containing all label names formatted as _lab_labelName_ and all feature names)';
 h.p0 = uicontrol('style','pushbutton','TooltipString', p0_tt,'units','normalized',...
     'pos',[x1,0.97,0.06,0.025],'string','Load Dataset',...
     'fontweight','b','callback',@p0_call);
@@ -165,7 +165,7 @@ h.p0 = uicontrol('style','pushbutton','TooltipString', p0_tt,'units','normalized
     end
 
 %% select features pushbutton
-p1_tt = ['Confirm the features that will be usedto compute pairwise scores between same and different label samples!'];
+p1_tt = 'Confirms the features that will be used to compute pairwise scores between same and different label samples!';
 h.p1 = uicontrol('style','pushbutton','TooltipString', p1_tt,'units','normalized',...
     'pos',[x1,0.04,0.125,0.03],'string','SELECT FEATURES',...
     'fontweight','b','callback',@p1_call);
@@ -186,7 +186,7 @@ h.p1 = uicontrol('style','pushbutton','TooltipString', p1_tt,'units','normalized
     end
 
 %% transform data pushbutton
-p2_tt=['Apply the transformation to the selected features BEFORE the calculation of scores'];
+p2_tt='Applies the transformation to the selected features BEFORE the calculation of scores';
 h.p2 = uicontrol('style','pushbutton','TooltipString', p2_tt, 'units','normalized',...
     'pos',[x2+0.005,0.475,x3-(x2+0.005),0.040],'string','TRANSFORM DATA',...
     'fontweight','b','callback',@p2_call);
@@ -211,7 +211,7 @@ h.p2 = uicontrol('style','pushbutton','TooltipString', p2_tt, 'units','normalize
     end
 
 %% calculate distances pushbutton
-p3_tt = ['compute pairwise distances between same-label sampels and different-label samples based on selected label level and using distance metric selected from drop down list'];
+p3_tt = 'Computes pairwise distances between same-label sampels and different-label samples based on selected label level and using distance metric selected from drop down list';
 h.p3 = uicontrol('style','pushbutton', 'TooltipString', p3_tt,'units','normalized',...
     'pos',[x2+0.005+(x3-(x2+0.005))/2,0.38,(x3-(x2+0.005))/2,0.04],'string','CALC. DIST.',...
     'fontweight','b','callback',@p3_call);
@@ -256,10 +256,11 @@ h.p3 = uicontrol('style','pushbutton', 'TooltipString', p3_tt,'units','normalize
         end
     end
 
-%% clear_figure pushbutton
+%% export scores pushbutton
+p4_tt = 'Exports the current scores as a .csv file. The first column consists of a label corresponding to same source score (0) or different source score (1). The second column consists of the scores. This file can be used with the Load Scores functionality';
 h.p4 = uicontrol('style','pushbutton','units','normalized',...
     'pos',[x4,0.24,(0.99-x3-0.02-0.03)/4,0.035],'string','Exp. Scores',...
-    'fontweight','b','fontsize',9,'callback',@p4_call);
+    'fontweight','b','fontsize',9, 'TooltipString', p4_tt,'callback',@p4_call);
     function p4_call(varargin)
         cla(h.ax1)
         %set(h.t(10:12),'string','...');
@@ -267,15 +268,15 @@ h.p4 = uicontrol('style','pushbutton','units','normalized',...
     end
 
 %% plot pushbutton
+p5_tt = 'Plots the scores for different and same source sample as histograms. Distribution functions that can be specified by the user are estimated and added to the plot';
 h.p5 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x4,0.28,(0.99-x3-0.02-0.03)/4,0.035],'string','PLOT',...
+    'pos',[x4,0.28,(0.99-x3-0.02-0.03)/4,0.035], 'TooltipString', p5_tt,'string','PLOT',...
     'fontweight','b','callback',@p5_call);
     function p5_call(varargin)
         if ~checkThings
             error('It is possible that you are using an illegal copy of this application. Limited time or site license expired. If you feel you have recieved this message in error contact <m.lopatka@uva.nl> or <j.c.dezoete@uva.nl>');
         else
-            or(if((strcmp(get(h.t(3),'string'),'distances computed'))&&...
-                    (strcmp(get(h.t(2),'string'),'transformation complete'))), strcmpi(get(h.t(3),'string'),'distances computed') h.t(21))
+            if or(and(strcmp(get(h.t(3),'string'),'distances computed'),(strcmp(get(h.t(2),'string'),'transformation complete'))),strcmpi(get(h.t(21),'string'),'scores loaded'))
                 % check if all steps are completed
                 sucessFlag = plot_distrib_and_hist;
                 
@@ -284,11 +285,16 @@ h.p5 = uicontrol('style','pushbutton','units','normalized',...
                     [confusion_matrix, CLLR] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, sucessFlag);
                     % we display the performance statistices
                     display_performance(confusion_matrix, CLLR, h.t)
-                    if isa(get(h.cb_labels,'value'), 'double')
-                        post_params_to_gui(h, parameters_same, parameters_diff, size(distance_diff,2), size(distance_same,2), size(feature_data,1), loc(find((get(h.cb_labels,'value'))))); %display the parameter
+                    if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                        if isa(get(h.cb_labels,'value'), 'double')
+                            post_params_to_gui(h, parameters_same, parameters_diff, size(distance_diff,2), size(distance_same,2), size(feature_data,1), loc(find((get(h.cb_labels,'value'))))); %display the parameter
+                        else
+                            post_params_to_gui(h, parameters_same, parameters_diff, size(distance_diff,2), size(distance_same,2), size(feature_data,1), loc(find(cell2mat(get(h.cb_labels,'value'))))); %display the parameter
+                        end
                     else
                         post_params_to_gui(h, parameters_same, parameters_diff, size(distance_diff,2), size(distance_same,2), size(feature_data,1), loc(find(cell2mat(get(h.cb_labels,'value'))))); %display the parameter
                     end
+                    
                 else
                     set(h.cb_plots(:),'backgroundcolor','default','fontweight','n');
                     error('something went wrong with the plotting');
@@ -300,9 +306,10 @@ h.p5 = uicontrol('style','pushbutton','units','normalized',...
     end
 
 %% add a preprocessing step to the workflow pushbutton
+p6_tt = 'Adds the selected pre-processing step from the drop down menu on the left to the current workflow. It is possible to combine several pre-processing steps into one workflow.';
 h.p6 = uicontrol('style','pushbutton','units','normalized',...
     'pos',[x2+0.005+(x3-(x2+0.005))/2,0.665,(x3-(x2+0.01))/2,0.04],'string','add step >',...
-    'fontweight','b','callback',@p6_call);
+    'fontweight','b','TooltipString', p6_tt,'callback',@p6_call);
     function p6_call(varargin)
         preProcs = get(h.popup1, 'String');
         preProcs = preProcs(get(h.popup1, 'Value'),:);
@@ -311,8 +318,9 @@ h.p6 = uicontrol('style','pushbutton','units','normalized',...
     end
 
 %% clear workflow pushbutton
+p7_tt = 'Clears the specified workflow. This way, the user can construct a new workflow';
 h.p7 = uicontrol('style','pushbutton','units','normalized',...
-    'pos',[x2+0.005,0.53,x3-(x2+0.005),0.030],'string','clear',...
+    'pos',[x2+0.005,0.53,x3-(x2+0.005),0.030], 'TooltipString', p7_tt,'string','clear',...
     'fontweight','b','callback',@p7_call);
     function p7_call(varargin)
         set(h.e1, 'String', 'data');
@@ -320,9 +328,10 @@ h.p7 = uicontrol('style','pushbutton','units','normalized',...
     end
 
 %% select all features pushbutton
+p8_tt = 'Selects all the features';
 h.p8 = uicontrol('style','pushbutton','units','normalized',...
     'pos',[x1+0.13,0.04,0.0325,0.030],'string','ALL',...
-    'fontweight','b','callback',@p8_call);
+    'fontweight','b', 'TooltipString', p8_tt,'callback',@p8_call);
     function p8_call(varargin)
         if(isfield(h,'cb_features')) % check if features exist
             set(h.cb_features(:), 'Value', 1);
@@ -331,9 +340,10 @@ h.p8 = uicontrol('style','pushbutton','units','normalized',...
     end
 
 %% select no features pushbutton
+p9_tt = 'Deselects all the features';
 h.p9 = uicontrol('style','pushbutton','units','normalized',...
     'pos',[x1+0.2375,0.04,0.0325,0.030],'string','NONE',...
-    'fontweight','b','callback',@p9_call);
+    'fontweight','b', 'TooltipString', p9_tt,'callback',@p9_call);
     function p9_call(varargin)
         if(isfield(h,'cb_features')) % check if features exist
             set(h.cb_features,'Value', 0);
@@ -342,10 +352,12 @@ h.p9 = uicontrol('style','pushbutton','units','normalized',...
         end
     end
 
+
 %% non zero standard deviation feature selection pushbutton
+p10_tt = 'Selects all the features that have a non zero standard deviation, ignoring the features that do not have discriminative power.';
 h.p10 = uicontrol('style','pushbutton','units','normalized',...
     'pos',[x1+0.1675,0.04,0.065,0.030],'string','NON-ZERO STD',...
-    'fontweight','b','callback',@p10_call);
+    'fontweight','b', 'TooltipString', p10_tt,'callback',@p10_call);
     function p10_call(varargin)
         if(isfield(h,'cb_features')) % check if features exist
             set(h.cb_features, 'Value', 0);
@@ -355,9 +367,10 @@ h.p10 = uicontrol('style','pushbutton','units','normalized',...
     end
 
 %% feature selection method execture pushbutton
+p11_tt = 'Executes the feature selection method that is selected in the radiobutton group';
 h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
     [x2+0.005+1/8*(x3-(x2+0.005)),0.115,3/4*(x3-(x2+0.005)),0.03],'string','Execute',...
-    'fontweight','b','callback',@p11_call,'Interruptible','on');
+    'fontweight','b', 'TooltipString', p11_tt,'callback',@p11_call,'Interruptible','on');
     function p11_call(varargin)
         if(strcmp(get(h.t(3),'string'),'distances computed'))
             vals = get(h.rb_feature_selection_method,'Value');
@@ -365,7 +378,7 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
             set(h.rb_feature_selection_method(:),'backgroundcolor','default','fontweight','n')
             % we limit the user in selecting the possible options
             %p5_call;
-            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.cb_features,h.cb_labels,h.rb_samedistribution,h.rb_diffdistribution,h.cb_plots,h.popup1,h.popup2],'enable','off');
+            set([h.p0,h.p1,h.p2,h.p3,h.p4,h.p5,h.p6,h.p7,h.p8,h.p9,h.p10,h.p12,h.p13,h.p14,h.p15,h.p16,h.p18,h.cb_features,h.cb_labels,h.rb_samedistribution,h.rb_diffdistribution,h.cb_plots,h.popup1,h.popup2],'enable','off');
             if(checked==1) %jacobs magical mystery tour
                 if(~isempty(str2num(get(h.t(10),'string')))&&strcmp(get(h.t(3),'string'),'distances computed'))
                     if(strcmp(get(h.p11,'string'),'Execute'))
@@ -487,9 +500,10 @@ h.p11 = uicontrol('style','pushbutton','units','normalized','pos',...
     end
 
 %% export population parameters pushbutton
+p12_tt = 'Exports a .txt file containing all the performed steps. This .txt file can be used to reconstruct a workflow.';
 h.p12 = uicontrol('style','pushbutton','units','normalized',...
     'pos',[x4,0.20,(0.99-x3-0.02-0.03)/4,0.035],'string','Exp. Pop. Parameters',...
-    'fontweight','b','fontsize',9, 'callback', @p12_call);
+    'fontweight','b','fontsize',9, 'TooltipString', p12_tt, 'callback', @p12_call);
     function p12_call(varargin)
         if(~strcmp('...',get(h.t(11),'string')))
             vals = get(h.rb_samedistribution,'Value');
@@ -519,8 +533,9 @@ h.p12 = uicontrol('style','pushbutton','units','normalized',...
     end
 
 %% data overview plot pushbutton
+p13_tt = 'Plots the figures selected in the checkboxes in separate windoes. These provice an overview of the data.';
 h.p13 = uicontrol('style','pushbutton','units','normalized','pos',...
-    [x2+0.005,0.005,x3-(x2+0.005),0.03],'string','Plot data overview',...
+    [x2+0.005,0.005,x3-(x2+0.005),0.03], 'TooltipString', p13_tt,'string','Plot data overview',...
     'fontweight','b','callback',@p13_call);
     function p13_call(varargin)
         if(strcmp(get(h.t(2),'string'),'transformation complete')&&get(h.cb_data_overview(1),'value')==1)
@@ -696,6 +711,17 @@ h.p18 = uicontrol('style','pushbutton','units','normalized','pos',[x1+0.065,0.97
                 
                 distance_same = score_data(labels_s == 0);
                 distance_diff = score_data(labels_s == 1);
+                % we set the distributions that will not work to `invisible'
+                if(sum(distance_same<=0)>0)
+                    set(h.rb_samedistribution([1:3]),'enable','off')
+                    set(h.rb_samedistribution(4),'value',1)
+                end
+                if(sum(distance_diff<=0)>0)
+                    set(h.rb_diffdistribution([1:3]),'enable','off')
+                    set(h.rb_diffdistribution(4),'value',1)
+                end
+                
+                
                 cla(h.ax1);
                 set([h.rb_diffdistribution(:);h.rb_samedistribution(:);h.cb_plots(:)],'backgroundcolor','default','fontweight','n');
                 %set(h.cb_labels(labChecks==1),'backgroundcolor',[.7,.9,.7],'fontweight','b');

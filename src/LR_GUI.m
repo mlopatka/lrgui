@@ -285,11 +285,16 @@ h.p5 = uicontrol('style','pushbutton','units','normalized',...
                     [confusion_matrix, CLLR] = eval_performance_ofFit(distance_same, distance_diff, parameters_same, parameters_diff, h.rb_samedistribution, h.rb_diffdistribution, sucessFlag);
                     % we display the performance statistices
                     display_performance(confusion_matrix, CLLR, h.t)
-                    if isa(get(h.cb_labels,'value'), 'double')
-                        post_params_to_gui(h, parameters_same, parameters_diff, size(distance_diff,2), size(distance_same,2), size(feature_data,1), loc(find((get(h.cb_labels,'value'))))); %display the parameter
+                    if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                        if isa(get(h.cb_labels,'value'), 'double')
+                            post_params_to_gui(h, parameters_same, parameters_diff, size(distance_diff,2), size(distance_same,2), size(feature_data,1), loc(find((get(h.cb_labels,'value'))))); %display the parameter
+                        else
+                            post_params_to_gui(h, parameters_same, parameters_diff, size(distance_diff,2), size(distance_same,2), size(feature_data,1), loc(find(cell2mat(get(h.cb_labels,'value'))))); %display the parameter
+                        end
                     else
-                        post_params_to_gui(h, parameters_same, parameters_diff, size(distance_diff,2), size(distance_same,2), size(feature_data,1), loc(find(cell2mat(get(h.cb_labels,'value'))))); %display the parameter
+                        post_params_to_gui(h, parameters_same, parameters_diff, size(distance_diff,2), size(distance_same,2), 0, 0); %display the parameter
                     end
+                    
                 else
                     set(h.cb_plots(:),'backgroundcolor','default','fontweight','n');
                     error('something went wrong with the plotting');
@@ -706,6 +711,17 @@ h.p18 = uicontrol('style','pushbutton','units','normalized','pos',[x1+0.065,0.97
                 
                 distance_same = score_data(labels_s == 0);
                 distance_diff = score_data(labels_s == 1);
+                % we set the distributions that will not work to `invisible'
+                if(sum(distance_same<=0)>0)
+                    set(h.rb_samedistribution([1:3]),'enable','off')
+                    set(h.rb_samedistribution(4),'value',1)
+                end
+                if(sum(distance_diff<=0)>0)
+                    set(h.rb_diffdistribution([1:3]),'enable','off')
+                    set(h.rb_diffdistribution(4),'value',1)
+                end
+                
+                
                 cla(h.ax1);
                 set([h.rb_diffdistribution(:);h.rb_samedistribution(:);h.cb_plots(:)],'backgroundcolor','default','fontweight','n');
                 %set(h.cb_labels(labChecks==1),'backgroundcolor',[.7,.9,.7],'fontweight','b');
