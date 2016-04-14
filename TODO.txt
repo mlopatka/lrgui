@@ -2,18 +2,16 @@ ROADMAP EAFS version:
 1.  documentation
 2.  tooltips # in progress
 3.  exportPopParams, plot_distrib_and_hist, populate_Features, populate_Labels, post_params_to_gui all have global variables set in the beginning of the functions it is better to pass them in from LR_GUI
-5.  internal cross validation for feature selection
-6.  waitbars for plots and feature selection methods
-6b. mystery tour does CLLR
+4.  internal cross validation for feature selection
+5.  waitbars for plots and feature selection methods
 
-7. smarter input of data
-8. new kde function (in c++)
+6. smarter input of data
+7. new kde function (in c++)
 
-9. validation of LRs by didier meuwly method
-10. new transformations, (new metrics?)
+8. validation of LRs by didier meuwly method
 
-11. Allow for transformation of data features to be applied to only some features
-12. cross validation in the background
+9. Allow for transformation of data features to be applied to only some features
+10. cross validation in the background
 13. feature selection method, dropdown menu
 
 ROADMAP trace-anchored version:
