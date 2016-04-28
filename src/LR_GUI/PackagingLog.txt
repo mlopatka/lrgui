@@ -1,0 +1,35 @@
+ant:
+<ant>
+  <mkdir dir="C:\Users\Gabriel\repos\lr_gui\src\LR_GUI\for_redistribution" />
+  <mkdir dir="C:\Users\Gabriel\repos\lr_gui\src\LR_GUI\for_testing" />
+  <mkdir dir="C:\Users\Gabriel\repos\lr_gui\src\LR_GUI\for_redistribution_files_only" />
+</ant>
+mcc -C -o LR_GUI -W WinMain:LR_GUI -T link:exe -d C:\Users\Gabriel\repos\lr_gui\src\LR_GUI\for_testing -v C:\Users\Gabriel\repos\lr_gui\src\LR_GUI.m 
+Compiler version: 5.2 (R2014b)
+Dependency analysis by REQUIREMENTS.
+[Warning: Adding path "C:\Users\Gabriel\repos\lr_gui\src" to Compiler path
+instance.] 
+Parsing file "C:\Users\Gabriel\repos\lr_gui\src\LR_GUI.m"
+	(Referenced from: "Compiler Command Line").
+Deleting 13 temporary MEX authorization files.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_9475_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_3588_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_14339_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_19568_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_21400_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_15813_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_22911_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_11259_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_26172_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_31305_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_11745_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_23374_3768.auth'.
+Removing: 'C:\Users\Gabriel\AppData\Local\Temp\mathworks_tmp_3768_9186_3768.auth'.
+Generating file "C:\Users\Gabriel\repos\lr_gui\src\LR_GUI\for_testing\readme.txt".
+Packaging...
+Adding custom icon C:\Program Files\MATLAB\R2014b\toolbox\compiler\Resources\default_icon.ico to C:\Users\Gabriel\repos\lr_gui\src\LR_GUI\for_testing\LR_GUI.exe.
+Attempting to embed the CTF archive into the application C:\Users\Gabriel\repos\lr_gui\src\LR_GUI\for_testing\LR_GUI.exe.
+Finished embedding CTF archive. Deleting the external CTF archive.
+Creating the bundle...
+Web based installer created at C:\Users\Gabriel\repos\lr_gui\src\LR_GUI\for_redistribution\MyAppInstaller_web.exe.
+Packaging complete.

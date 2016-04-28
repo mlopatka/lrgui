@@ -577,12 +577,18 @@ h.p14 = uicontrol('style','pushbutton','TooltipString', p14_tt,'units', 'normali
             distribution_diff = get(h.rb_diffdistribution(logical(checked)),'String');
             % get the workflow
             wrkflw = get(h.e1,'String');
-            temp_labs_var = get(h.cb_labels, 'Value');
-            if ~isa(temp_labs_var, 'cell')
-                temp_labs_var = {temp_labs_var};
-            end
+            
+            if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                temp_labs_var = get(h.cb_labels, 'Value');
+                if ~isa(temp_labs_var, 'cell')
+                    temp_labs_var = {temp_labs_var};
+                end
             labels_active = cell2mat(temp_labs_var);
             [population_data, successFlag] = exportPopParams(wrkflw, distribution_same, distribution_diff, labels_active, 'consolidate');
+            else
+                [population_data, successFlag] = exportPopParams(wrkflw, distribution_same, distribution_diff, 'filler', 'scores');
+            end
+            
             if successFlag
                 [a,b] = uigetfile('*.csv','Select the case file containing unlabeled data');
                 if isnumeric(a)
@@ -590,10 +596,18 @@ h.p14 = uicontrol('style','pushbutton','TooltipString', p14_tt,'units', 'normali
                 else
                     path2caseFile = [b,a];
                     [case_data, caseNumbers, featureNames] = parseCase(path2caseFile);
-                    okToProceed = testCasetoPopValidity(population_data, case_data, featureNames);
-                    if okToProceed
+                    if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                        okToProceed = testCasetoPopValidity(population_data, case_data, featureNames);
+                    else
+                        okToProceed = true;
+                    end
+                    if and(okToProceed,~strcmpi(get(h.t(21),'string'),'scores loaded'))
                         [dCell, d] = generateDistsFromPair(case_data, population_data, featureNames, caseNumbers);
                         lr = NaN(numel(d),1);%preallocate
+                    elseif and(okToProceed,strcmpi(get(h.t(21),'string'),'scores loaded'))
+                        dCell=caseNumbers; clearvars caseNumbers
+                        d = case_data; clearvars case_data
+                        disp('only scores versus distributions.')
                     else
                         error('case file not compatible with reference population');
                     end
