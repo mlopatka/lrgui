@@ -577,20 +577,24 @@ h.p14 = uicontrol('style','pushbutton','TooltipString', p14_tt,'units', 'normali
             distribution_diff = get(h.rb_diffdistribution(logical(checked)),'String');
             % get the workflow
             wrkflw = get(h.e1,'String');
-            temp_labs_var = get(h.cb_labels, 'Value');
-            if ~isa(temp_labs_var, 'cell')
-                temp_labs_var = {temp_labs_var};
+            if ~strcmpi(get(h.t(21),'string'),'scores loaded')
+                temp_labs_var = get(h.cb_labels, 'Value');
+                if ~isa(temp_labs_var, 'cell')
+                    temp_labs_var = {temp_labs_var};
+                end
+                labels_active = cell2mat(temp_labs_var);
+                [population_data, successFlag] = exportPopParams(wrkflw, distribution_same, distribution_diff, labels_active, 'consolidate');
+            else 
+                successFlag = true;
             end
-            labels_active = cell2mat(temp_labs_var);
-            [population_data, successFlag] = exportPopParams(wrkflw, distribution_same, distribution_diff, labels_active, 'consolidate');
             if successFlag
                 [a,b] = uigetfile('*.csv','Select the case file containing unlabeled data');
                 if isnumeric(a)
                     disp('invalid file location!');
                 else
                     path2caseFile = [b,a];
-                    [case_data, caseNumbers, featureNames] = parseCase(path2caseFile);
-                    okToProceed = testCasetoPopValidity(population_data, case_data, featureNames);
+                    [case_data, caseNumbers, featureNames] = parseCaseScore(path2caseFile);
+                    okToProceed = testCasetoPopValidity(distance_same, case_data, featureNames);
                     if okToProceed
                         [dCell, d] = generateDistsFromPair(case_data, population_data, featureNames, caseNumbers);
                         lr = NaN(numel(d),1);%preallocate
