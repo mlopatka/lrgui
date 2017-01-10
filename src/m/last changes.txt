@@ -119,4 +119,5 @@ WE NEED TO DO SOMETHING REGARDING THE SPEED. THE DIFFERENCE IS WITH BEFORE IS UN
 31/07/2014 [J]: solved error that occurred when pushing validate samples and export population buttons before this was possible (when no plot was made)
 31/07/2014 [J]: solved error that occorred when cancelling the export population parameters operation when selecting a location to save the file.
 
+10/01/2017 [M]: changed liscensing to permanent (no expiration)
 
