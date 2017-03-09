@@ -139,5 +139,33 @@ switch flag
         exportLocation = popParams;
         
         successFlag = true;
+    case 'scores'
+        popParams = struct;
+        
+        popParams.timestamp = datestr(now);
+        popParams.serialWorkflow = strtrim(regexp(wrkflw, '>', 'split'));
+        temp_1 = get(h.popup2, 'String');
+        popParams.serialWorkflow{end+1} = temp_1(get(h.popup2, 'Value'), :);
+        popParams.sameClass.modelType = distribution_same;
+        popParams.differentClass.modelType = distribution_diff;
+        
+%         popParams.featureIndex = h.featInd;
+%         popParams.featureNames = get(get(h.bg_features, 'Children'), 'String');
+        
+        popParams.sameClass.params = parameters_same;
+        popParams.differentClass.params = parameters_diff;
+        
+%         popParams.labels = loc;
+%         popParams.data.raw = feature_data;
+%         popParams.data.mean = mean(transformed_data);
+%         popParams.data.std = std(transformed_data);
+%         popParams.data.size = size(transformed_data);
+        
+        popParams.distances.same = distance_same;
+        popParams.distances.diff = distance_diff;
+        
+        exportLocation = popParams;
+        
+        successFlag = true;
 end
 end
