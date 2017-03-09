@@ -1,11 +1,7 @@
 Description:
 
-LR_GUI is MATLAB based tool for the exploration of forensic datasets. It can be used for the exploration of forensic reference data and calculation of
-score-based likelihood ratios based on modelling the rarity of pairwise comparisons between traces under a set of forensic hypotheses.
+LR_GUI is MATLAB based tool for the exploration of forensic datasets. It can be used for the exploration of forensic reference data and calculation of score-based likelihood ratios based on modelling the rarity of pairwise comparisons between traces under a set of forensic hypotheses.
 
 Disclaimer: 
 
-These software packages are distributed in a provisional nature and provided for research and academic use only.
-Commercial distribution is strictly prohibited. All calculations performed are to be treated as unvalidated with no guarantee of accuracy whatsoever.
-The software and constituent functions are still in development and have not been validated for use in forensic practice.
-Each project is an individual initiative of the project contributors and are provided "as is" without warranty of any kind, either expressed or implied.
+These software packages are distributed in a provisional nature and provided for research and academic use only. Commercial distribution is strictly prohibited. All calculations performed are to be treated as unvalidated with no guarantee of accuracy whatsoever. The software and constituent functions are still in development and have not been validated for use in forensic practice. Each project is an individual initiative of the project contributors and are provided "as is" without warranty of any kind, either expressed or implied.
